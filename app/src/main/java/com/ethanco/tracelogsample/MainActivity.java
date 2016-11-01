@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
             .setMaxFileCacheSize(1024 * 1024 * 10) //日志文件最大缓存，以B为单位
             .setFolder("MyFolder") //日志保存文件夹，如果不设置，默认为TraceLog
             .setFileName("MyFileName") //日志文件文件名，如果不设置，默认为TraceLog
-            .setDefaultTag("MyTag")
-            .setEnable(true)
+            .setDefaultTag("MyTag") //默认tag
+            .setEnable(BuildConfig.DEBUG) //是否启用
             .build();
 
     TraceLog buglyLog = new TraceLog.Builder().addLog(new BuglyLog()).build(); //腾讯Bugly 日志上报封装
