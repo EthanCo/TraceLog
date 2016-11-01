@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/TraceLogSample.iml" filepath="$PROJECT_DIR$/TraceLogSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracelog/tracelog.iml" filepath="$PROJECT_DIR$/tracelog/tracelog.iml" />
-      <module fileurl="file://$PROJECT_DIR$/trancelog/trancelog.iml" filepath="$PROJECT_DIR$/trancelog/trancelog.iml" />
     </modules>
   </component>
 </project>
