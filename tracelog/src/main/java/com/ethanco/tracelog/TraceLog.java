@@ -34,6 +34,11 @@ public class TraceLog implements ILog, ISimpleLog {
         } else {
             this.logList = new ArrayList<>();
         }
+        if (builder.baseEnable) {
+            if (!this.logList.contains(builder.baseLog)) {
+                this.logList.add(builder.baseLog);
+            }
+        }
         this.tag = builder.tag;
 
         for (ILog log : logList) {
@@ -139,6 +144,8 @@ public class TraceLog implements ILog, ISimpleLog {
         int maxFileCacheSize;
         String fileName;
         String folder;
+        boolean baseEnable;
+        ILog baseLog;
 
         public Builder() {
             //default config
@@ -147,6 +154,8 @@ public class TraceLog implements ILog, ISimpleLog {
             this.maxFileCacheSize = 1014 * 1024 * 10;
             this.fileName = "TranceLog";
             this.folder = "TranceLog";
+            this.baseLog = new DefaultLog();
+            this.baseEnable = true;
         }
 
         public Builder(Application context) {
@@ -162,6 +171,12 @@ public class TraceLog implements ILog, ISimpleLog {
             return this;
         }
 
+        //设置基础Log
+        public Builder setBaseLog(ILog log) {
+            this.baseLog = log;
+            return this;
+        }
+
         //设置默认Tag
         public Builder setDefaultTag(String tag) {
             this.tag = tag;
@@ -171,6 +186,12 @@ public class TraceLog implements ILog, ISimpleLog {
         //是否启用日志打印
         public Builder setEnable(boolean enable) {
             this.enable = enable;
+            return this;
+        }
+
+        //设置基础日志是否打印
+        public Builder setBaseEnable(boolean enable) {
+            this.baseEnable = enable;
             return this;
         }
 
@@ -199,9 +220,6 @@ public class TraceLog implements ILog, ISimpleLog {
         }
 
         public TraceLog build() {
-            if (logList.size() == 0) {
-                logList.add(new DefaultLog());
-            }
             return new TraceLog(this);
         }
     }
