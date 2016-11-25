@@ -26,14 +26,15 @@ public class LocalRecordLog implements ILog, IRecord, IInit {
     private String folder = "TraceLog";
     private int maxCacheSize = 1014 * 1024 * 10; //以B为单位
     private String path;
+    private long lastClearTime = 0;
 
     @Override
     public void init(Application application) {
         this.context = application;
-        String filePath = getFileDir(context, folder);
-        if (!Util.checkDirSize(filePath, maxCacheSize)) {
-            Util.deleteAll(filePath);
-        }
+        //this.filePath = getFileDir(context, folder);
+        String filePath = getDir(context, folder);
+        this.path = getPath(filePath);
+        clearCacheIfTimeOut(filePath);
     }
 
     @Override
@@ -66,11 +67,16 @@ public class LocalRecordLog implements ILog, IRecord, IInit {
         saveLogToFile(">> Exception <<", e.getMessage());
     }
 
+    private void preSaveLogToFile() {
+        clearCacheIfTimeOut(path);
+    }
+
     private void saveLogToFile(String tag, String message) {
+        preSaveLogToFile();
+
         String time = Util.date2Str(new Date());
         String str = time + " " + tag + ": " + message + "\r\n";
-        String dir = getDir(context, folder);
-        String path = getPath(dir);
+
         Util.saveStrToFile(str, path, true);
     }
 
@@ -103,6 +109,21 @@ public class LocalRecordLog implements ILog, IRecord, IInit {
             }
         }
         return path;
+    }
+
+    //如果超过时间，进行清除缓存
+    private void clearCacheIfTimeOut(String filePath) {
+        if (System.currentTimeMillis() - lastClearTime > 3600000) { //1000*60*60
+            clearCache(filePath);
+            lastClearTime = System.currentTimeMillis();
+        }
+    }
+
+    //如果缓存大于指定值，进行清除
+    private void clearCache(String filePath) {
+        if (!Util.checkDirSize(filePath, maxCacheSize)) {
+            Util.deleteAll(filePath);
+        }
     }
 
     @Override
