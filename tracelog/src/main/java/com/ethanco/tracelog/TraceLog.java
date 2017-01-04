@@ -139,7 +139,7 @@ public class TraceLog implements ILog, ISimpleLog {
     @Override
     public void v(String message) {
         if (baseLog != null) {
-            baseLog.e(tag, message);
+            baseLog.v(tag, message);
         }
 
         for (ILog log : logList) {
@@ -150,7 +150,7 @@ public class TraceLog implements ILog, ISimpleLog {
     @Override
     public void d(String message) {
         if (baseLog != null) {
-            baseLog.e(tag, message);
+            baseLog.d(tag, message);
         }
 
         for (ILog log : logList) {
@@ -161,7 +161,7 @@ public class TraceLog implements ILog, ISimpleLog {
     @Override
     public void i(String message) {
         if (baseLog != null) {
-            baseLog.e(tag, message);
+            baseLog.i(tag, message);
         }
 
         for (ILog log : logList) {
@@ -172,7 +172,7 @@ public class TraceLog implements ILog, ISimpleLog {
     @Override
     public void w(String message) {
         if (baseLog != null) {
-            baseLog.e(tag, message);
+            baseLog.w(tag, message);
         }
 
         for (ILog log : logList) {

@@ -3,7 +3,6 @@ package com.ethanco.tracelogsample;
 import android.app.Application;
 
 import com.ethanco.tracelog.TraceLog;
-import com.ethanco.tracelog.logs.DefaultLog;
 import com.ethanco.tracelog.logs.LocalRecordLog;
 
 
@@ -51,7 +50,7 @@ public class TraceLogFactory {
     private static TraceLog createLocalLog(Application context) {
         if (localLog == null) {
             localLog = new TraceLog.Builder(context) //对于某些实现了IInit接口的ILog实现类，需要传入Context
-                    .addLog(new DefaultLog())    //默认Log
+                    //.addLog(new DefaultLog())    //默认Log
                     .addLog(new LocalRecordLog()) //日志保存至本地文件
                     .setMaxFileCacheSize(1024 * 1024 * 10) //日志文件最大缓存，以B为单位
                     .setFolder("MyFolder") //日志保存文件夹，如果不设置，默认为TraceLog
