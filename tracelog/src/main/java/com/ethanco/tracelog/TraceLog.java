@@ -74,10 +74,11 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.v(tag, message);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
-            if (enable) {
-                log.v(tag, message);
-            }
+            log.v(tag, message);
         }
     }
 
@@ -87,6 +88,9 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.d(tag, message);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
             log.d(tag, message);
         }
@@ -98,6 +102,9 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.i(tag, message);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
             log.i(tag, message);
         }
@@ -109,6 +116,9 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.w(tag, message);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
             log.w(tag, message);
         }
@@ -120,6 +130,9 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.e(tag, message);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
             log.e(tag, message);
         }
@@ -131,6 +144,9 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.postCatchedException(e);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
             log.postCatchedException(e);
         }
@@ -142,6 +158,9 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.v(tag, message);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
             log.v(tag, message);
         }
@@ -153,6 +172,9 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.d(tag, message);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
             log.d(tag, message);
         }
@@ -164,6 +186,9 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.i(tag, message);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
             log.i(tag, message);
         }
@@ -175,6 +200,9 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.w(tag, message);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
             log.w(tag, message);
         }
@@ -186,6 +214,9 @@ public class TraceLog implements ILog, ISimpleLog {
             baseLog.e(tag, message);
         }
 
+        if (!enable) {
+            return;
+        }
         for (ILog log : logList) {
             log.e(tag, message);
         }
