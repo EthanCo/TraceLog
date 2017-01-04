@@ -17,8 +17,11 @@ import java.util.List;
  */
 
 public class TraceLog implements ILog, ISimpleLog {
+    private Builder builder;
+    private ILog baseLog;
     private List<ILog> logList;
     private String tag;
+    private boolean enable;
 
     public TraceLog() {
         this(new Builder());
@@ -29,17 +32,23 @@ public class TraceLog implements ILog, ISimpleLog {
     }
 
     public TraceLog(Builder builder) {
-        if (builder.enable) {
-            this.logList = builder.logList;
-        } else {
-            this.logList = new ArrayList<>();
-        }
-        if (builder.baseEnable) {
-            if (!this.logList.contains(builder.baseLog)) {
-                this.logList.add(builder.baseLog);
-            }
-        }
+        setBuilder(builder);
+    }
+
+    public Builder getBuilder() {
+        return builder;
+    }
+
+    public void setBuilder(Builder builder) {
+        this.builder = builder;
+        this.logList = builder.logList;
+        this.enable = builder.enable;
         this.tag = builder.tag;
+        if (builder.baseEnable) {
+            this.baseLog = builder.baseLog;
+        } else {
+            this.baseLog = null;
+        }
 
         for (ILog log : logList) {
             if (log instanceof IRecord) {
@@ -61,13 +70,23 @@ public class TraceLog implements ILog, ISimpleLog {
 
     @Override
     public void v(String tag, String message) {
+        if (baseLog != null) {
+            baseLog.v(tag, message);
+        }
+
         for (ILog log : logList) {
-            log.v(tag, message);
+            if (enable) {
+                log.v(tag, message);
+            }
         }
     }
 
     @Override
     public void d(String tag, String message) {
+        if (baseLog != null) {
+            baseLog.d(tag, message);
+        }
+
         for (ILog log : logList) {
             log.d(tag, message);
         }
@@ -75,6 +94,10 @@ public class TraceLog implements ILog, ISimpleLog {
 
     @Override
     public void i(String tag, String message) {
+        if (baseLog != null) {
+            baseLog.i(tag, message);
+        }
+
         for (ILog log : logList) {
             log.i(tag, message);
         }
@@ -82,6 +105,10 @@ public class TraceLog implements ILog, ISimpleLog {
 
     @Override
     public void w(String tag, String message) {
+        if (baseLog != null) {
+            baseLog.w(tag, message);
+        }
+
         for (ILog log : logList) {
             log.w(tag, message);
         }
@@ -89,6 +116,10 @@ public class TraceLog implements ILog, ISimpleLog {
 
     @Override
     public void e(String tag, String message) {
+        if (baseLog != null) {
+            baseLog.e(tag, message);
+        }
+
         for (ILog log : logList) {
             log.e(tag, message);
         }
@@ -96,6 +127,10 @@ public class TraceLog implements ILog, ISimpleLog {
 
     @Override
     public void postCatchedException(Exception e) {
+        if (baseLog != null) {
+            baseLog.postCatchedException(e);
+        }
+
         for (ILog log : logList) {
             log.postCatchedException(e);
         }
@@ -103,6 +138,10 @@ public class TraceLog implements ILog, ISimpleLog {
 
     @Override
     public void v(String message) {
+        if (baseLog != null) {
+            baseLog.e(tag, message);
+        }
+
         for (ILog log : logList) {
             log.v(tag, message);
         }
@@ -110,6 +149,10 @@ public class TraceLog implements ILog, ISimpleLog {
 
     @Override
     public void d(String message) {
+        if (baseLog != null) {
+            baseLog.e(tag, message);
+        }
+
         for (ILog log : logList) {
             log.d(tag, message);
         }
@@ -117,6 +160,10 @@ public class TraceLog implements ILog, ISimpleLog {
 
     @Override
     public void i(String message) {
+        if (baseLog != null) {
+            baseLog.e(tag, message);
+        }
+
         for (ILog log : logList) {
             log.i(tag, message);
         }
@@ -124,6 +171,10 @@ public class TraceLog implements ILog, ISimpleLog {
 
     @Override
     public void w(String message) {
+        if (baseLog != null) {
+            baseLog.e(tag, message);
+        }
+
         for (ILog log : logList) {
             log.w(tag, message);
         }
@@ -131,6 +182,10 @@ public class TraceLog implements ILog, ISimpleLog {
 
     @Override
     public void e(String message) {
+        if (baseLog != null) {
+            baseLog.e(tag, message);
+        }
+
         for (ILog log : logList) {
             log.e(tag, message);
         }
