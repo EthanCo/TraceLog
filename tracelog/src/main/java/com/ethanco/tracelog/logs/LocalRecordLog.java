@@ -34,7 +34,7 @@ public class LocalRecordLog implements ILog, IRecord, IInit {
         //this.filePath = getFileDir(context, folder);
         String filePath = getDir(context, folder);
         this.path = getPath(filePath);
-        clearCacheIfTimeOut(filePath);
+        clearCacheIfTimeOut(path);
     }
 
     @Override
