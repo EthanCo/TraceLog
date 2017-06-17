@@ -1,6 +1,6 @@
 package com.ethanco.logproxy;
 
-import com.ethanco.logproxy.abs.IEntireLog;
+import com.ethanco.logbase.IEntireLog;
 
 /**
  * Log 空实现

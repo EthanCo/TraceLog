@@ -6,7 +6,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import com.ethanco.tracelog.abs.IInit;
-import com.ethanco.logproxy.abs.ICommonLog;
+import com.ethanco.logbase.ICommonLog;
 import com.ethanco.tracelog.abs.IRecord;
 import com.ethanco.tracelog.utils.Util;
 

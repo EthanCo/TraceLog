@@ -1,1 +1,1 @@
-include ':app', ':tracelog', ':logproxy'
+include ':app', ':tracelog', ':logproxy', ':logbase'

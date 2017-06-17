@@ -1,6 +1,6 @@
 package com.ethanco.logproxy;
 
-import com.ethanco.logproxy.abs.IEntireLog;
+import com.ethanco.logbase.IEntireLog;
 
 /**
  * 简易日志工具类

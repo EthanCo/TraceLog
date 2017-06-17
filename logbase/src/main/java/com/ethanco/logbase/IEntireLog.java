@@ -1,4 +1,4 @@
-package com.ethanco.logproxy.abs;
+package com.ethanco.logbase;
 
 /**
  * 完整的Log

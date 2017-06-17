@@ -2,7 +2,7 @@ package com.ethanco.tracelog.logs;
 
 import android.util.Log;
 
-import com.ethanco.logproxy.abs.ICommonLog;
+import com.ethanco.logbase.ICommonLog;
 
 
 /**

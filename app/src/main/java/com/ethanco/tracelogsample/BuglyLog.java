@@ -1,6 +1,6 @@
 package com.ethanco.tracelogsample;
 
-import com.ethanco.logproxy.abs.ICommonLog;
+import com.ethanco.logbase.ICommonLog;
 
 /**
  * @Description 腾讯Bugly 日志上报

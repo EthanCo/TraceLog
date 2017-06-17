@@ -2,8 +2,8 @@ package com.ethanco.tracelog;
 
 import android.app.Application;
 
-import com.ethanco.logproxy.abs.IEntireLog;
-import com.ethanco.logproxy.abs.ICommonLog;
+import com.ethanco.logbase.IEntireLog;
+import com.ethanco.logbase.ICommonLog;
 import com.ethanco.tracelog.abs.IInit;
 import com.ethanco.tracelog.abs.IRecord;
 import com.ethanco.tracelog.logs.DefaultLog;
