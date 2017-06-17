@@ -5,7 +5,7 @@ import com.ethanco.logbase.IEntireLog;
 /**
  * 日志代理类
  */
-public class LogProxy implements IEntireLog{
+public class LogProxy implements IEntireLog {
     private IEntireLog log = new EmptyLog();
     private boolean debug = true;
 
@@ -57,8 +57,8 @@ public class LogProxy implements IEntireLog{
         if (debug) log.e(tag, message);
     }
 
-    public  void postCatchedException(Exception e) {
-        if (debug) log.e("Exception>>>:" + e.getMessage());
+    public void postCatchedException(Exception e) {
+        if (debug) log.postCatchedException(e);
     }
 }
 
