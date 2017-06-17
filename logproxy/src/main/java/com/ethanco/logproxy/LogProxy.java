@@ -9,8 +9,8 @@ public class LogProxy implements IEntireLog{
     private IEntireLog log = new EmptyLog();
     private boolean debug = true;
 
-    public void setLog(IEntireLog ICommonLog) {
-        log = ICommonLog;
+    public void setLog(IEntireLog entireLog) {
+        log = entireLog;
     }
 
     public void setDebug(boolean _debug) {
