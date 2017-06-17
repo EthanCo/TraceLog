@@ -29,12 +29,14 @@ public class MainActivity extends AppCompatActivity {
     TraceLog buglyLog = new TraceLog.Builder().addLog(new BuglyLog()).build(); //腾讯Bugly 日志上报封装
     private Button btnSetNotPrint;
     private Button btnSimpleLog;
+    private LogProxy logProxy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        logProxy = App.getInstance().getLogProxy();
         btnSetNotPrint = (Button) findViewById(R.id.btn_set_not_print_log);
         btnSimpleLog = (Button) findViewById(R.id.btn_simple_log);
 
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         btnSimpleLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProxy.i("hello world ! this is simple log");
+                logProxy.i("hello world ! this is simple log");
             }
         });
     }

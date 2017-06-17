@@ -5,59 +5,59 @@ import com.ethanco.logbase.IEntireLog;
 /**
  * 日志代理类
  */
-public class LogProxy {
-    private static IEntireLog log = new EmptyLog();
-    private static boolean debug = true;
+public class LogProxy implements IEntireLog{
+    private IEntireLog log = new EmptyLog();
+    private boolean debug = true;
 
-    public static void setLog(IEntireLog ICommonLog) {
+    public void setLog(IEntireLog ICommonLog) {
         log = ICommonLog;
     }
 
-    public static void setDebug(boolean _debug) {
+    public void setDebug(boolean _debug) {
         debug = _debug;
     }
 
-    public static void v(String msg) {
+    public void v(String msg) {
         if (debug) log.v(msg);
     }
 
-    public static void d(String msg) {
+    public void d(String msg) {
         if (debug) log.d(msg);
     }
 
-    public static void i(String msg) {
+    public void i(String msg) {
         if (debug) log.i(msg);
     }
 
-    public static void w(String msg) {
+    public void w(String msg) {
         if (debug) log.w(msg);
     }
 
-    public static void e(String msg) {
+    public void e(String msg) {
         if (debug) log.e(msg);
     }
 
-    public static void v(String tag, String message) {
+    public void v(String tag, String message) {
         if (debug) log.v(tag, message);
     }
 
-    public static void d(String tag, String message) {
+    public void d(String tag, String message) {
         if (debug) log.d(tag, message);
     }
 
-    public static void i(String tag, String message) {
+    public void i(String tag, String message) {
         if (debug) log.i(tag, message);
     }
 
-    public static void w(String tag, String message) {
+    public void w(String tag, String message) {
         if (debug) log.w(tag, message);
     }
 
-    public static void e(String tag, String message) {
+    public void e(String tag, String message) {
         if (debug) log.e(tag, message);
     }
 
-    public static void postCatchedException(Exception e) {
+    public  void postCatchedException(Exception e) {
         if (debug) log.e("Exception>>>:" + e.getMessage());
     }
 }

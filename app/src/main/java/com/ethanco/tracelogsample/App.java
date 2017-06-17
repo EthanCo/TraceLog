@@ -10,8 +10,13 @@ import com.ethanco.logproxy.LogProxy;
 
 public class App extends Application {
     private static App sInstance;
+    private LogProxy logProxy;
 
-    public static Application getInstance() {
+    public LogProxy getLogProxy() {
+        return logProxy;
+    }
+
+    public static App getInstance() {
         return sInstance;
     }
 
@@ -22,7 +27,8 @@ public class App extends Application {
         TraceLogFactory.init(this);
 
         //设置Simple Log
-        LogProxy.setLog(TraceLogFactory.create(TraceLogFactory.Type.DEFAULT));
-        LogProxy.setDebug(BuildConfig.DEBUG);
+        logProxy = new LogProxy();
+        logProxy.setLog(TraceLogFactory.create(TraceLogFactory.Type.DEFAULT));
+        logProxy.setDebug(BuildConfig.DEBUG);
     }
 }
