@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.ethanco.logproxy.L;
+import com.ethanco.logproxy.LogProxy;
 import com.ethanco.tracelog.TraceLog;
 import com.ethanco.tracelog.logs.LocalRecordLog;
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         btnSimpleLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                L.i("hello world ! this is simple log");
+                LogProxy.i("hello world ! this is simple log");
             }
         });
     }

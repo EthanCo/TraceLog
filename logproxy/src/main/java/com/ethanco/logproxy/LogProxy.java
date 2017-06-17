@@ -3,9 +3,9 @@ package com.ethanco.logproxy;
 import com.ethanco.logbase.IEntireLog;
 
 /**
- * 简易日志工具类
+ * 日志代理类
  */
-public class L {
+public class LogProxy {
     private static IEntireLog log = new EmptyLog();
     private static boolean debug = true;
 

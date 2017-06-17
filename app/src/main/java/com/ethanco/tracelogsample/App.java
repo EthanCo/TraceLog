@@ -2,7 +2,7 @@ package com.ethanco.tracelogsample;
 
 import android.app.Application;
 
-import com.ethanco.logproxy.L;
+import com.ethanco.logproxy.LogProxy;
 
 /**
  * Created by EthanCo on 2016/11/1.
@@ -22,7 +22,7 @@ public class App extends Application {
         TraceLogFactory.init(this);
 
         //设置Simple Log
-        L.setLog(TraceLogFactory.create(TraceLogFactory.Type.DEFAULT));
-        L.setDebug(BuildConfig.DEBUG);
+        LogProxy.setLog(TraceLogFactory.create(TraceLogFactory.Type.DEFAULT));
+        LogProxy.setDebug(BuildConfig.DEBUG);
     }
 }
