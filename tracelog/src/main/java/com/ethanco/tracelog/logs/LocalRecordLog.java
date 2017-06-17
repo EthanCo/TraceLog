@@ -6,7 +6,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import com.ethanco.tracelog.abs.IInit;
-import com.ethanco.tracelog.abs.ILog;
+import com.ethanco.logproxy.abs.ICommonLog;
 import com.ethanco.tracelog.abs.IRecord;
 import com.ethanco.tracelog.utils.Util;
 
@@ -18,7 +18,7 @@ import java.util.Date;
  * Created by EthanCo on 2016/10/12.
  */
 
-public class LocalRecordLog implements ILog, IRecord, IInit {
+public class LocalRecordLog implements ICommonLog, IRecord, IInit {
 
     private Context context = null;
     private final String fileSuffix = ".log";

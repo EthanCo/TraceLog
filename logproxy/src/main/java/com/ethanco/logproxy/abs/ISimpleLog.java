@@ -1,4 +1,4 @@
-package com.ethanco.tracelog.abs;
+package com.ethanco.logproxy.abs;
 
 /**
  * @Description 没有Tag Log

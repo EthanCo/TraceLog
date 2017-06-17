@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/logproxy" />
             <option value="$PROJECT_DIR$/tracelog" />
           </set>
         </option>

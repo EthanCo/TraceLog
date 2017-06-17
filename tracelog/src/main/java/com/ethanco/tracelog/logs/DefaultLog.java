@@ -2,7 +2,7 @@ package com.ethanco.tracelog.logs;
 
 import android.util.Log;
 
-import com.ethanco.tracelog.abs.ILog;
+import com.ethanco.logproxy.abs.ICommonLog;
 
 
 /**
@@ -10,7 +10,7 @@ import com.ethanco.tracelog.abs.ILog;
  * Created by EthanCo on 2016/11/1.
  */
 
-public class DefaultLog implements ILog {
+public class DefaultLog implements ICommonLog {
 
     @Override
     public void v(String tag, String message) {

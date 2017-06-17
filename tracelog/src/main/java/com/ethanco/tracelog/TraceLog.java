@@ -2,10 +2,10 @@ package com.ethanco.tracelog;
 
 import android.app.Application;
 
+import com.ethanco.logproxy.abs.IEntireLog;
+import com.ethanco.logproxy.abs.ICommonLog;
 import com.ethanco.tracelog.abs.IInit;
-import com.ethanco.tracelog.abs.ILog;
 import com.ethanco.tracelog.abs.IRecord;
-import com.ethanco.tracelog.abs.ISimpleLog;
 import com.ethanco.tracelog.logs.DefaultLog;
 
 import java.util.ArrayList;
@@ -16,10 +16,10 @@ import java.util.List;
  * Created by EthanCo on 2016/11/1.
  */
 
-public class TraceLog implements ILog, ISimpleLog {
+public class TraceLog implements IEntireLog {
     private Builder builder;
-    private ILog baseLog;
-    private List<ILog> logList;
+    private ICommonLog baseLog;
+    private List<ICommonLog> logList;
     private String tag;
     private boolean enable;
 
@@ -50,7 +50,7 @@ public class TraceLog implements ILog, ISimpleLog {
             this.baseLog = null;
         }
 
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             if (log instanceof IRecord) {
                 IRecord record = (IRecord) log;
                 record.setFileName(builder.fileName);
@@ -77,7 +77,7 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.v(tag, message);
         }
     }
@@ -91,7 +91,7 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.d(tag, message);
         }
     }
@@ -105,7 +105,7 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.i(tag, message);
         }
     }
@@ -119,7 +119,7 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.w(tag, message);
         }
     }
@@ -133,7 +133,7 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.e(tag, message);
         }
     }
@@ -147,7 +147,7 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.postCatchedException(e);
         }
     }
@@ -161,7 +161,7 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.v(tag, message);
         }
     }
@@ -175,7 +175,7 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.d(tag, message);
         }
     }
@@ -189,7 +189,7 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.i(tag, message);
         }
     }
@@ -203,7 +203,7 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.w(tag, message);
         }
     }
@@ -217,21 +217,21 @@ public class TraceLog implements ILog, ISimpleLog {
         if (!enable) {
             return;
         }
-        for (ILog log : logList) {
+        for (ICommonLog log : logList) {
             log.e(tag, message);
         }
     }
 
     public static class Builder {
         Application application;
-        List<ILog> logList = new ArrayList<>();
+        List<ICommonLog> logList = new ArrayList<>();
         String tag;
         boolean enable;
         int maxFileCacheSize;
         String fileName;
         String folder;
         boolean baseEnable;
-        ILog baseLog;
+        ICommonLog baseLog;
 
         public Builder() {
             //default config
@@ -250,7 +250,7 @@ public class TraceLog implements ILog, ISimpleLog {
         }
 
         //添加ILog实现类
-        public Builder addLog(ILog log) {
+        public Builder addLog(ICommonLog log) {
             if (!logList.contains(log)) {
                 logList.add(log);
             }
@@ -258,7 +258,7 @@ public class TraceLog implements ILog, ISimpleLog {
         }
 
         //设置基础Log
-        public Builder setBaseLog(ILog log) {
+        public Builder setBaseLog(ICommonLog log) {
             this.baseLog = log;
             return this;
         }

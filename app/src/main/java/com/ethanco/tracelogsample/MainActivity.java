@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.ethanco.logproxy.L;
 import com.ethanco.tracelog.TraceLog;
 import com.ethanco.tracelog.logs.LocalRecordLog;
 
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     TraceLog buglyLog = new TraceLog.Builder().addLog(new BuglyLog()).build(); //腾讯Bugly 日志上报封装
     private Button btnSetNotPrint;
+    private Button btnSimpleLog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnSetNotPrint = (Button) findViewById(R.id.btn_set_not_print_log);
+        btnSimpleLog = (Button) findViewById(R.id.btn_simple_log);
 
         defaultLog.i("Z-MainActivity", "MainActivity onCreate1");
         defaultLog.i("MainActivity onCreate2");
@@ -69,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
                 builder.setEnable(false);  //附加日志打印
                 builder.setBaseEnable(false);  //基础日志打印
                 localLog.setBuilder(builder);
+            }
+        });
+
+        btnSimpleLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                L.i("hello world ! this is simple log");
             }
         });
     }

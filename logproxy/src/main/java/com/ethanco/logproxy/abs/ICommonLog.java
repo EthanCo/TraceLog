@@ -1,11 +1,11 @@
-package com.ethanco.tracelog.abs;
+package com.ethanco.logproxy.abs;
 
 /**
- * @Description TODO
+ * @Description 常用Log
  * Created by EthanCo on 2016/10/12.
  */
 
-public interface ILog {
+public interface ICommonLog {
     void v(String tag, String message);
 
     void d(String tag, String message);

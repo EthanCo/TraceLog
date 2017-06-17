@@ -1,13 +1,13 @@
 package com.ethanco.tracelogsample;
 
-import com.ethanco.tracelog.abs.ILog;
+import com.ethanco.logproxy.abs.ICommonLog;
 
 /**
  * @Description 腾讯Bugly 日志上报
  * Created by EthanCo on 2016/11/1.
  */
 
-public class BuglyLog implements ILog {
+public class BuglyLog implements ICommonLog {
     @Override
     public void v(String tag, String message) {
         //需引用Bugly后，取消注释
