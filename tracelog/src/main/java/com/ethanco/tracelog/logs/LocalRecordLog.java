@@ -1,13 +1,11 @@
 package com.ethanco.tracelog.logs;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
 
-import com.ethanco.tracelog.abs.IInit;
 import com.ethanco.logbase.ICommonLog;
-import com.ethanco.tracelog.abs.IRecord;
+import com.ethanco.tracelog.abs.IInit;
 import com.ethanco.tracelog.utils.Util;
 
 import java.io.File;
@@ -18,22 +16,69 @@ import java.util.Date;
  * Created by EthanCo on 2016/10/12.
  */
 
-public class LocalRecordLog implements ICommonLog, IRecord, IInit {
+public class LocalRecordLog implements ICommonLog, IInit {
 
     private Context context = null;
     private final String fileSuffix = ".log";
     private String fileName = "TraceLog";
     private String folder = "TraceLog";
     private int maxCacheSize = 1014 * 1024 * 10; //以B为单位
-    private String path;
+    private boolean useCacheDir = true;
+    private String path = null;
     private long lastClearTime = 0;
 
+    /**
+     * @param context
+     * @param maxCacheSize 日志文件最大缓存，以B为单位
+     * @param folder       日志保存文件夹，如果不设置，默认为TraceLog
+     * @param fileName     日志文件文件名(不包括后缀)，如果不设置，默认为TraceLog
+     * @param useCacheDir  使用缓存文件夹，true表示存储在/data/data/cache文件夹下，false表示存储在外部存储根目录下
+     */
+    public LocalRecordLog(Context context, int maxCacheSize, String folder, String fileName, boolean useCacheDir) {
+        this.context = context;
+        this.fileName = fileName;
+        this.folder = folder;
+        this.maxCacheSize = maxCacheSize;
+        this.useCacheDir = useCacheDir;
+    }
+
+    public LocalRecordLog(Context context, int maxCacheSize, String folder, String fileName) {
+        this.context = context;
+        this.maxCacheSize = maxCacheSize;
+        this.folder = folder;
+        this.fileName = fileName;
+    }
+
+    public LocalRecordLog(Context context, String folder, String fileName) {
+        this.context = context;
+        this.fileName = fileName;
+        this.folder = folder;
+    }
+
+    public LocalRecordLog(Context context, int maxCacheSize) {
+        this.context = context;
+        this.maxCacheSize = maxCacheSize;
+    }
+
+    public LocalRecordLog(Context context) {
+        this.context = context;
+    }
+
+    /**
+     * @param context
+     * @param path    路径，包括文件名和文件名后缀
+     */
+    public LocalRecordLog(Context context, String path) {
+        this.context = context;
+        this.path = path;
+    }
+
     @Override
-    public void init(Application application) {
-        this.context = application;
-        //this.filePath = getFileDir(context, folder);
-        String filePath = getDir(context, folder);
-        this.path = getPath(filePath);
+    public void init() {
+        if (TextUtils.isEmpty(path)) {
+            String filePath = generateDir(context, folder);
+            this.path = generatePath(filePath);
+        }
         clearCacheIfTimeOut(path);
     }
 
@@ -80,35 +125,30 @@ public class LocalRecordLog implements ICommonLog, IRecord, IInit {
         Util.saveStrToFile(str, path, true);
     }
 
-    private String getPath(String dir) {
+    private String generatePath(String dir) {
         if (TextUtils.isEmpty(path)) {
             path = dir + File.separator + fileName + fileSuffix;
         }
         return path;
     }
 
-    private String getDir(Context context, String folder) {
+    private String generateDir(Context context, String folder) {
         String dir;
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            dir = Environment.getExternalStorageDirectory() + File.separator + folder;
+            if (useCacheDir) {
+                dir = context.getExternalCacheDir() + File.separator + folder;
+            } else {
+                dir = Environment.getExternalStorageDirectory() + File.separator + folder;
+                //dir = context.getExternalFilesDir(folder).getPath();
+            }
         } else {
-            dir = getFileDir(context, folder);
-        }
-        return dir;
-    }
-
-    private String getFileDir(Context context, String folder) {
-        String path;
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            path = context.getExternalFilesDir(folder).getPath();
-        } else {
-            path = context.getFilesDir().getPath() + File.separator + folder;
-            File file = new File(path);
+            dir = context.getCacheDir().getPath() + File.separator + folder;
+            File file = new File(dir);
             if (!file.exists()) {
                 file.mkdir();
             }
         }
-        return path;
+        return dir;
     }
 
     //如果超过时间，进行清除缓存
@@ -124,20 +164,5 @@ public class LocalRecordLog implements ICommonLog, IRecord, IInit {
         if (!Util.checkDirSize(filePath, maxCacheSize)) {
             Util.deleteAll(filePath);
         }
-    }
-
-    @Override
-    public void setMaxFileCacheSize(int maxCacheSize) {
-        this.maxCacheSize = maxCacheSize;
-    }
-
-    @Override
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    @Override
-    public void setFolder(String folder) {
-        this.folder = folder;
     }
 }

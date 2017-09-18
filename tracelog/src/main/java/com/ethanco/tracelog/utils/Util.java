@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @Description TODO
+ * @Description 工具类
  * Created by EthanCo on 2016/11/1.
  */
 
@@ -191,7 +191,7 @@ public class Util {
                 return size;
             }
         } else {
-            System.out.println("文件或者文件夹不存在，请检查路径是否正确！");
+            System.out.println("文件或者文件夹不存在:"+file.getAbsolutePath());
             return 0;
         }
     }

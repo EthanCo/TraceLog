@@ -42,19 +42,18 @@ public class TraceLogFactory {
 
     private static TraceLog createDefaultLog() {
         if (defaultLog == null) {
-            defaultLog = new TraceLog.Builder().build();
+            defaultLog = new TraceLog.Builder().addLog(TraceLog.defaultLog()).build();
         }
         return defaultLog;
     }
 
     private static TraceLog createLocalLog(Application context) {
         if (localLog == null) {
-            localLog = new TraceLog.Builder(context) //对于某些实现了IInit接口的ILog实现类，需要传入Context
+            LocalRecordLog recordLog = new LocalRecordLog(context,
+                    1024 * 1024 * 10, "MyFolder", "MyFileName");
+            localLog = new TraceLog.Builder() //对于某些实现了IInit接口的ILog实现类，需要传入Context
                     //.addLog(new DefaultLog())    //默认Log
-                    .addLog(new LocalRecordLog()) //日志保存至本地文件
-                    .setMaxFileCacheSize(1024 * 1024 * 10) //日志文件最大缓存，以B为单位
-                    .setFolder("MyFolder") //日志保存文件夹，如果不设置，默认为TraceLog
-                    .setFileName("MyFileName") //日志文件文件名，如果不设置，默认为TraceLog
+                    .addLog(recordLog) //日志保存至本地文件
                     .setDefaultTag("MyTag")
                     .setEnable(BuildConfig.DEBUG)
                     .build();
