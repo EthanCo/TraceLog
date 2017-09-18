@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.ethanco.loggerex.LoggerLog;
 import com.ethanco.logproxy.LogProxy;
 import com.ethanco.tracelog.TraceLog;
-import com.ethanco.tracelog.logs.DefaultLog;
 import com.ethanco.tracelog.logs.LocalRecordLog;
 
 
@@ -17,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
     TraceLog defaultLog = new TraceLog.Builder().addLog(TraceLog.defaultLog()).build();
 
     TraceLog localLog = new TraceLog.Builder() //对于某些实现了IInit接口的ILog实现类，需要传入Context
-            .addLog(new DefaultLog())     //默认日志 和设置setBaseEnable(true)的作用相同
+            //.addLog(new DefaultLog())     //默认日志 和设置setBaseEnable(true)的作用相同
+            .addLog(new LoggerLog())
             .addLog(new LocalRecordLog(App.getInstance(), 1024 * 1024 * 10, "MyFolder", "MyFileName")) //日志保存至本地文件
             .setDefaultTag("MyTag") //默认tag
             .setEnable(BuildConfig.DEBUG) //是否启用
