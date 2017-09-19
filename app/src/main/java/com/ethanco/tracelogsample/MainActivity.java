@@ -13,7 +13,7 @@ import com.ethanco.tracelog.logs.DiskLogTrace;
 public class MainActivity extends AppCompatActivity {
     TraceLog traceLog = new TraceLog.Builder()
             .addTrace(TraceLog.defaultTrace())
-            .setDefaultTag("Zhk")
+            .setDefaultTag("DefaultTag")
             .addTrace(new LoggerTrace())
             .addTrace(new DiskLogTrace(App.getInstance()))
             .build();
@@ -22,13 +22,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        traceLog.i("Z-MainActivity", "MainActivity onCreate1");
+        traceLog.i("Z-MainActivity", "onCreate");
 
         Button btnPrintLog = (Button) findViewById(R.id.btn_print_log);
         btnPrintLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                traceLog.i("Life is a journey. What we should care about is not where it's headed but what we see and how we feel.");
+                traceLog.i("Life is a journey.");
             }
         });
     }
