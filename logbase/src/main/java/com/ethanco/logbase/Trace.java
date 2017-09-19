@@ -1,7 +1,7 @@
 package com.ethanco.logbase;
 
 /**
- * TODO
+ * Trace
  *
  * @author EthanCo
  * @since 2017/9/19

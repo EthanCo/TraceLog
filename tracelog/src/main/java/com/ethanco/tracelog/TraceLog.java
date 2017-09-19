@@ -1,9 +1,15 @@
 package com.ethanco.tracelog;
 
+import android.text.TextUtils;
+
+import com.ethanco.logbase.Config;
 import com.ethanco.logbase.Printer;
 import com.ethanco.logbase.Trace;
 import com.ethanco.tracelog.logs.DefaultLog;
 import com.ethanco.tracelog.printer.TraceLogImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description TranceLog
@@ -11,9 +17,14 @@ import com.ethanco.tracelog.printer.TraceLogImpl;
  */
 
 public class TraceLog implements Printer {
-    private TraceLogImpl impl = new TraceLogImpl();
+    private TraceLogImpl impl;
 
-    private TraceLog() {
+    private TraceLog(Builder builder) {
+        impl = new TraceLogImpl();
+        impl.setDefaultTag(builder.tag);
+        for (Trace trace : builder.traces) {
+            impl.addTrace(trace);
+        }
     }
 
     private static Trace defaultTraces;
@@ -23,22 +34,6 @@ public class TraceLog implements Printer {
             defaultTraces = new DefaultLog();
         }
         return defaultTraces;
-    }
-
-    public static TraceLog create() {
-        return new TraceLog();
-    }
-
-    @Override
-    public Printer setDefaultTag(String tag) {
-        impl.setDefaultTag(tag);
-        return this;
-    }
-
-    @Override
-    public TraceLog addTrace(Trace trace) {
-        impl.addTrace(trace);
-        return this;
     }
 
     @Override
@@ -101,9 +96,35 @@ public class TraceLog implements Printer {
         impl.log(priority, tag, message, throwable);
     }
 
-    @Override
-    public TraceLog clearTraces() {
-        impl.clearTraces();
-        return this;
+
+    public static class Builder implements Config {
+        private String tag;
+        private List<Trace> traces = new ArrayList<>();
+
+        public Builder() {
+        }
+
+        @Override
+        public Builder setDefaultTag(String tag) {
+            this.tag = tag;
+            return this;
+        }
+
+        @Override
+        public Builder addTrace(Trace trace) {
+            traces.add(trace);
+            return this;
+        }
+
+        public TraceLog build() {
+            if (TextUtils.isEmpty(tag)) {
+                tag = "TraceLog";
+            }
+            if (traces.size() == 0) {
+                traces.add(new DefaultLog());
+            }
+            TraceLog traceLog = new TraceLog(this);
+            return traceLog;
+        }
     }
 }

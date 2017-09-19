@@ -11,10 +11,12 @@ import com.ethanco.tracelog.logs.DiskLogTrace;
 
 
 public class MainActivity extends AppCompatActivity {
-    TraceLog traceLog = TraceLog.create()
+    TraceLog traceLog = new TraceLog.Builder()
             .addTrace(TraceLog.defaultTrace())
+            .setDefaultTag("Zhk")
             .addTrace(new LoggerTrace())
-            .addTrace(new DiskLogTrace(App.getInstance()));
+            .addTrace(new DiskLogTrace(App.getInstance()))
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

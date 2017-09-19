@@ -3,6 +3,7 @@ package com.ethanco.tracelog.printer;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.ethanco.logbase.Config;
 import com.ethanco.logbase.Printer;
 import com.ethanco.logbase.Trace;
 import com.ethanco.tracelog.utils.Util;
@@ -35,7 +36,7 @@ import static android.util.Log.VERBOSE;
  * @since 2017/9/19
  */
 
-public class TraceLogImpl implements Printer {
+public class TraceLogImpl implements Printer, Config {
 
     /**
      * It is used for json pretty print
@@ -165,20 +166,20 @@ public class TraceLogImpl implements Printer {
         }
     }
 
-    @Override
-    public Printer clearTraces() {
+    //@Override
+    public TraceLogImpl clearTraces() {
         traces.clear();
         return this;
     }
 
     @Override
-    public Printer setDefaultTag(String tag) {
+    public TraceLogImpl setDefaultTag(String tag) {
         defaultTag = tag;
         return this;
     }
 
     @Override
-    public Printer addTrace(Trace trace) {
+    public TraceLogImpl addTrace(Trace trace) {
         traces.add(trace);
         return this;
     }

@@ -1,18 +1,13 @@
 package com.ethanco.logbase;
 
 /**
- * TODO
+ * Printer
  *
  * @author EthanCo
  * @since 2017/9/19
  */
 
 public interface Printer {
-
-    Printer setDefaultTag(String tag);
-
-    Printer addTrace(Trace trace);
-
     Printer t(String tag);
 
     void d(String message, Object... args);
@@ -36,6 +31,4 @@ public interface Printer {
     void xml(String xml);
 
     void log(int priority, String tag, String message, Throwable throwable);
-
-    Printer clearTraces();
 }
