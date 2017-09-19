@@ -3,6 +3,7 @@ package com.ethanco.tracelog.printer;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.ethanco.logbase.Printer;
 import com.ethanco.logbase.Trace;
 import com.ethanco.tracelog.utils.Util;
 
@@ -28,13 +29,13 @@ import static android.util.Log.DEBUG;
 import static android.util.Log.VERBOSE;
 
 /**
- * TODO
+ * TraceLogImpl
  *
  * @author EthanCo
  * @since 2017/9/19
  */
 
-public class LogPrinter implements Printer {
+public class TraceLogImpl implements Printer {
 
     /**
      * It is used for json pretty print
@@ -46,7 +47,8 @@ public class LogPrinter implements Printer {
      */
     private final ThreadLocal<String> localTag = new ThreadLocal<>();
 
-    private final List<Trace> logAdapters = new ArrayList<>();
+    private final List<Trace> traces = new ArrayList<>();
+    private volatile String defaultTag = "TraceLog";
 
     @Override
     public Printer t(String tag) {
@@ -152,22 +154,33 @@ public class LogPrinter implements Printer {
         if (Util.isEmpty(message)) {
             message = "Empty/NULL log message";
         }
+        if (Util.isEmpty(tag)) {
+            tag = defaultTag;
+        }
 
-        for (Trace adapter : logAdapters) {
+        for (Trace adapter : traces) {
             if (adapter.isLoggable(tag, priority)) {
-                adapter.log(priority, message);
+                adapter.log(priority, tag, message);
             }
         }
     }
 
     @Override
-    public void clearLogAdapters() {
-        logAdapters.clear();
+    public Printer clearTraces() {
+        traces.clear();
+        return this;
     }
 
     @Override
-    public void addAdapter(Trace adapter) {
-        logAdapters.add(adapter);
+    public Printer setDefaultTag(String tag) {
+        defaultTag = tag;
+        return this;
+    }
+
+    @Override
+    public Printer addTrace(Trace trace) {
+        traces.add(trace);
+        return this;
     }
 
     /**

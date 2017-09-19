@@ -7,7 +7,6 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.ethanco.logbase.Trace;
 import com.ethanco.tracelog.utils.Util;
@@ -20,7 +19,7 @@ import java.util.Date;
  * Created by EthanCo on 2016/10/12.
  */
 
-public class LocalRecordLog extends Trace {
+public class DiskLogTrace implements Trace {
 
     private Context context = null;
     private final String fileSuffix = ".log";
@@ -38,7 +37,7 @@ public class LocalRecordLog extends Trace {
      * @param fileName     日志文件文件名(不包括后缀)，如果不设置，默认为TraceLog
      * @param useCacheDir  使用缓存文件夹，true表示存储在/data/data/cache文件夹下，false表示存储在外部存储根目录下
      */
-    public LocalRecordLog(Context context, int maxCacheSize, String folder, String fileName, boolean useCacheDir) {
+    public DiskLogTrace(Context context, int maxCacheSize, String folder, String fileName, boolean useCacheDir) {
         this.context = context;
         this.fileName = fileName;
         this.folder = folder;
@@ -47,7 +46,7 @@ public class LocalRecordLog extends Trace {
         init();
     }
 
-    public LocalRecordLog(Context context, int maxCacheSize, String folder, String fileName) {
+    public DiskLogTrace(Context context, int maxCacheSize, String folder, String fileName) {
         this.context = context;
         this.maxCacheSize = maxCacheSize;
         this.folder = folder;
@@ -55,20 +54,20 @@ public class LocalRecordLog extends Trace {
         init();
     }
 
-    public LocalRecordLog(Context context, String folder, String fileName) {
+    public DiskLogTrace(Context context, String folder, String fileName) {
         this.context = context;
         this.fileName = fileName;
         this.folder = folder;
         init();
     }
 
-    public LocalRecordLog(Context context, int maxCacheSize) {
+    public DiskLogTrace(Context context, int maxCacheSize) {
         this.context = context;
         this.maxCacheSize = maxCacheSize;
         init();
     }
 
-    public LocalRecordLog(Context context) {
+    public DiskLogTrace(Context context) {
         this.context = context;
         init();
     }
@@ -77,7 +76,7 @@ public class LocalRecordLog extends Trace {
      * @param context
      * @param path    路径，包括文件名和文件名后缀
      */
-    public LocalRecordLog(Context context, String path) {
+    public DiskLogTrace(Context context, String path) {
         this.context = context;
         this.path = path;
         init();
@@ -92,20 +91,6 @@ public class LocalRecordLog extends Trace {
         HandlerThread ht = new HandlerThread("TraceLog." + System.currentTimeMillis());
         ht.start();
         writeHandler = new WriteHandler(ht.getLooper(), path, maxCacheSize);
-    }
-
-    @Override
-    protected void log(int priority, String tag, String message, Throwable t) {
-        if (t != null) {
-            if (TextUtils.isEmpty(message)) {
-                message = Log.getStackTraceString(t);
-            } else {
-                message += "\r\n" + Log.getStackTraceString(t);
-            }
-        }
-        if (!TextUtils.isEmpty(message)) {
-            saveLogToFile(tag, message);
-        }
     }
 
     private String generatePath(String dir) {
@@ -139,6 +124,18 @@ public class LocalRecordLog extends Trace {
         Message msg = Message.obtain();
         msg.obj = str;
         writeHandler.sendMessage(msg);
+    }
+
+    @Override
+    public boolean isLoggable(String tag, int priority) {
+        return true;
+    }
+
+    @Override
+    public void log(int priority, String tag, String message) {
+        if (!TextUtils.isEmpty(message)) {
+            saveLogToFile(tag, message);
+        }
     }
 
     private static class WriteHandler extends Handler {

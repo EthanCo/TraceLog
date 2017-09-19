@@ -5,22 +5,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.ethanco.loggerex.LoggerTrace;
 import com.ethanco.tracelog.TraceLog;
-import com.ethanco.tracelog.logs.DefaultLog;
-import com.ethanco.tracelog.logs.LocalRecordLog;
+import com.ethanco.tracelog.logs.DiskLogTrace;
 
 
 public class MainActivity extends AppCompatActivity {
-
-
-    TraceLog traceLog = new TraceLog();
+    TraceLog traceLog = TraceLog.create()
+            .addTrace(TraceLog.defaultTrace())
+            .addTrace(new LoggerTrace())
+            .addTrace(new DiskLogTrace(App.getInstance()));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        traceLog.addTrace(new DefaultLog());
-        traceLog.addTrace(new LocalRecordLog(this));
         traceLog.i("Z-MainActivity", "MainActivity onCreate1");
 
         Button btnPrintLog = (Button) findViewById(R.id.btn_print_log);

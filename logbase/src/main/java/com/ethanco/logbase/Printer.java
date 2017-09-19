@@ -1,6 +1,4 @@
-package com.ethanco.tracelog.printer;
-
-import com.ethanco.logbase.Trace;
+package com.ethanco.logbase;
 
 /**
  * TODO
@@ -11,7 +9,9 @@ import com.ethanco.logbase.Trace;
 
 public interface Printer {
 
-    void addAdapter(Trace adapter);
+    Printer setDefaultTag(String tag);
+
+    Printer addTrace(Trace trace);
 
     Printer t(String tag);
 
@@ -31,17 +31,11 @@ public interface Printer {
 
     void wtf(String message, Object... args);
 
-    /**
-     * Formats the given json content and print it
-     */
     void json(String json);
 
-    /**
-     * Formats the given xml content and print it
-     */
     void xml(String xml);
 
     void log(int priority, String tag, String message, Throwable throwable);
 
-    void clearLogAdapters();
+    Printer clearTraces();
 }

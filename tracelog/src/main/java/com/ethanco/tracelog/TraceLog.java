@@ -1,94 +1,109 @@
 package com.ethanco.tracelog;
 
+import com.ethanco.logbase.Printer;
 import com.ethanco.logbase.Trace;
 import com.ethanco.tracelog.logs.DefaultLog;
-import com.ethanco.tracelog.printer.LogPrinter;
-
-import java.util.List;
+import com.ethanco.tracelog.printer.TraceLogImpl;
 
 /**
  * @Description TranceLog
  * Created by EthanCo on 2016/11/1.
  */
 
-public class TraceLog {
-    private List<Trace> logList;
-    private String tag;
+public class TraceLog implements Printer {
+    private TraceLogImpl impl = new TraceLogImpl();
 
-    LogPrinter logPrinter = new LogPrinter();
-
-    public TraceLog() {
+    private TraceLog() {
     }
 
-    private static Trace defaultLog;
+    private static Trace defaultTraces;
 
-    public static Trace defaultLog() {
-        if (defaultLog == null) {
-            defaultLog = new DefaultLog();
+    public static Trace defaultTrace() {
+        if (defaultTraces == null) {
+            defaultTraces = new DefaultLog();
         }
-        return defaultLog;
+        return defaultTraces;
     }
 
-    public void addTrace(Trace trace) {
-        logPrinter.addAdapter(trace);
+    public static TraceLog create() {
+        return new TraceLog();
     }
 
-
-    public void v(String tag, String message) {
-        logPrinter.t(tag).v(message);
+    @Override
+    public Printer setDefaultTag(String tag) {
+        impl.setDefaultTag(tag);
+        return this;
     }
 
-
-    public void d(String tag, String message) {
-        logPrinter.t(tag).d(message);
+    @Override
+    public TraceLog addTrace(Trace trace) {
+        impl.addTrace(trace);
+        return this;
     }
 
-
-    public void i(String tag, String message) {
-        logPrinter.t(tag).i(message);
+    @Override
+    public Printer t(String tag) {
+        return impl.t(tag);
     }
 
-
-    public void w(String tag, String message) {
-        logPrinter.t(tag).w(message);
+    @Override
+    public void d(String message, Object... args) {
+        impl.d(message, args);
     }
 
-
-    public void e(String tag, String message) {
-        logPrinter.t(tag).e(message);
+    @Override
+    public void d(Object object) {
+        impl.d(object);
     }
 
-
-    public void json(String message) {
-        logPrinter.json(message);
+    @Override
+    public void e(String message, Object... args) {
+        impl.e(message, args);
     }
 
-
-    public void xml(String message) {
-        logPrinter.xml(message);
+    @Override
+    public void e(Throwable throwable, String message, Object... args) {
+        impl.e(throwable, message, args);
     }
 
-    public void v(String message) {
-        logPrinter.v(message);
+    @Override
+    public void w(String message, Object... args) {
+        impl.w(message, args);
     }
 
-
-    public void d(String message) {
-        logPrinter.e(message);
+    @Override
+    public void i(String message, Object... args) {
+        impl.i(message, args);
     }
 
-
-    public void i(String message) {
-        logPrinter.i(message);
+    @Override
+    public void v(String message, Object... args) {
+        impl.v(message, args);
     }
 
-
-    public void w(String message) {
-        logPrinter.w(message);
+    @Override
+    public void wtf(String message, Object... args) {
+        impl.wtf(message, args);
     }
 
+    @Override
+    public void json(String json) {
+        impl.json(json);
+    }
 
-    public void e(String message) {
-        logPrinter.e(message);
+    @Override
+    public void xml(String xml) {
+        impl.xml(xml);
+    }
+
+    @Override
+    public void log(int priority, String tag, String message, Throwable throwable) {
+        impl.log(priority, tag, message, throwable);
+    }
+
+    @Override
+    public TraceLog clearTraces() {
+        impl.clearTraces();
+        return this;
     }
 }

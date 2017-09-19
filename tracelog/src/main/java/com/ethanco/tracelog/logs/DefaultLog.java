@@ -4,9 +4,6 @@ import android.util.Log;
 
 import com.ethanco.logbase.Trace;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * 基础日志
  *
@@ -14,41 +11,16 @@ import java.util.regex.Pattern;
  * @since 2017/9/19
  */
 
-public class DefaultLog extends Trace {
+public class DefaultLog implements Trace {
     private static final int MAX_LOG_LENGTH = 4000;
-    private static final int MAX_TAG_LENGTH = 23;
-    private static final int CALL_STACK_INDEX = 5;
-    private static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
 
-    protected String createStackElementTag(StackTraceElement element) {
-        String tag = element.getClassName();
-        Matcher m = ANONYMOUS_CLASS.matcher(tag);
-        if (m.find()) {
-            tag = m.replaceAll("");
-        }
-        tag = tag.substring(tag.lastIndexOf('.') + 1);
-        return tag.length() > MAX_TAG_LENGTH ? tag.substring(0, MAX_TAG_LENGTH) : tag;
+    @Override
+    public boolean isLoggable(String tag, int priority) {
+        return true;
     }
 
     @Override
-    protected final String getTag() {
-        String tag = super.getTag();
-        if (tag != null) {
-            return tag;
-        }
-
-        // DO NOT switch this to Thread.getCurrentThread().getStackTrace(). The test will pass
-        // because Robolectric runs them on the JVM but on Android the elements are different.
-        StackTraceElement[] stackTrace = new Throwable().getStackTrace();
-        if (stackTrace.length <= CALL_STACK_INDEX) {
-            throw new IllegalStateException(
-                    "Synthetic stacktrace didn't have enough elements: are you using proguard?");
-        }
-        return createStackElementTag(stackTrace[CALL_STACK_INDEX]);
-    }
-
-    @Override
-    protected void log(int priority, String tag, String message, Throwable t) {
+    public void log(int priority, String tag, String message) {
         if (message.length() < MAX_LOG_LENGTH) {
             if (priority == Log.ASSERT) {
                 Log.wtf(tag, message);

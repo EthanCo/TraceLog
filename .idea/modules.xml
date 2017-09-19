@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/logbase/logbase.iml" filepath="$PROJECT_DIR$/logbase/logbase.iml" />
       <module fileurl="file://$PROJECT_DIR$/loggerex/loggerex.iml" filepath="$PROJECT_DIR$/loggerex/loggerex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/logglobal/logglobal.iml" filepath="$PROJECT_DIR$/logglobal/logglobal.iml" />
       <module fileurl="file://$PROJECT_DIR$/logproxy/logproxy.iml" filepath="$PROJECT_DIR$/logproxy/logproxy.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracelog/tracelog.iml" filepath="$PROJECT_DIR$/tracelog/tracelog.iml" />
     </modules>
