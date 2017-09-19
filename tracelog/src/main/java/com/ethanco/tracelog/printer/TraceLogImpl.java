@@ -28,6 +28,7 @@ import javax.xml.transform.stream.StreamSource;
 import static android.util.Log.ASSERT;
 import static android.util.Log.DEBUG;
 import static android.util.Log.VERBOSE;
+import static com.ethanco.tracelog.parser.ObjectUtil.objectToString;
 
 /**
  * TraceLogImpl
@@ -66,12 +67,14 @@ public class TraceLogImpl implements Printer, Config {
 
     @Override
     public void d(Object object) {
-        log(DEBUG, null, Util.toString(object));
+        //log(DEBUG, null, Util.toString(object));
+        log(DEBUG, null, objectToString(object));
     }
 
     @Override
     public void e(String message, Object... args) {
-        e(null, message, args);
+        //e(null, message, args);
+        log(Log.ERROR, null, message, args);
     }
 
     @Override
@@ -110,13 +113,15 @@ public class TraceLogImpl implements Printer, Config {
             if (json.startsWith("{")) {
                 JSONObject jsonObject = new JSONObject(json);
                 String message = jsonObject.toString(JSON_INDENT);
-                d(message);
+                //d(message);
+                log(DEBUG, null, objectToString(message));
                 return;
             }
             if (json.startsWith("[")) {
                 JSONArray jsonArray = new JSONArray(json);
                 String message = jsonArray.toString(JSON_INDENT);
-                d(message);
+                //d(message);
+                log(DEBUG, null, objectToString(message));
                 return;
             }
             e("Invalid Json");

@@ -37,8 +37,9 @@ public class TraceLog implements Printer {
     }
 
     @Override
-    public Printer t(String tag) {
-        return impl.t(tag);
+    public TraceLog t(String tag) {
+        impl.t(tag);
+        return this;
     }
 
     @Override
