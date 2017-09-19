@@ -36,6 +36,16 @@ public class EmptyLog implements IEntireLog {
     }
 
     @Override
+    public void json(String message) {
+
+    }
+
+    @Override
+    public void xml(String message) {
+
+    }
+
+    @Override
     public void v(String tag, String message) {
 
     }
@@ -57,6 +67,16 @@ public class EmptyLog implements IEntireLog {
 
     @Override
     public void e(String tag, String message) {
+
+    }
+
+    @Override
+    public void json(String tag, String message) {
+
+    }
+
+    @Override
+    public void xml(String tag, String message) {
 
     }
 

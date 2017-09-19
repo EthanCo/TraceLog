@@ -15,4 +15,8 @@ public interface ISimpleLog {
     void w(String message);
 
     void e(String message);
+
+    void json(String message);
+
+    void xml(String message);
 }

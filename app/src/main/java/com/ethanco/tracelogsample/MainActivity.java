@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
             .addLog(new LoggerLog())
             .addLog(new LocalRecordLog(App.getInstance(), 1024 * 1024 * 10, "MyFolder", "MyFileName")) //日志保存至本地文件
             .setDefaultTag("MyTag") //默认tag
-            .setEnable(BuildConfig.DEBUG) //是否启用
             .build();
 
     TraceLog buglyLog = new TraceLog.Builder().addLog(new BuglyLog()).build(); //腾讯Bugly 日志上报封装
@@ -70,18 +69,14 @@ public class MainActivity extends AppCompatActivity {
         btnSetNotPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TraceLog.Builder builder = localLog.getBuilder();
-                builder.setEnable(false);  //设置enable为false
-                localLog.setBuilder(builder);
+                localLog.setEnable(false);
             }
         });
 
         btnSetPrintLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TraceLog.Builder builder = localLog.getBuilder();
-                builder.setEnable(true);  //附加enable为true
-                localLog.setBuilder(builder);
+                localLog.setEnable(true);
             }
         });
 

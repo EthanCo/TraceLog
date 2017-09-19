@@ -35,6 +35,16 @@ public class BuglyLog implements ICommonLog {
     }
 
     @Override
+    public void json(String tag, String message) {
+        //BuglyLog.i(tag, message);
+    }
+
+    @Override
+    public void xml(String tag, String message) {
+        //BuglyLog.i(tag, message);
+    }
+
+    @Override
     public void postCatchedException(Exception e) {
         //CrashReport.postCatchedException(e);
     }

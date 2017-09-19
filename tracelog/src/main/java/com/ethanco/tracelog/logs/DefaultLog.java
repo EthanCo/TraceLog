@@ -38,6 +38,18 @@ public class DefaultLog implements ICommonLog {
     }
 
     @Override
+    public void json(String tag, String message) {
+        //直接打印
+        i(tag, message);
+    }
+
+    @Override
+    public void xml(String tag, String message) {
+        //直接打印
+        i(tag, message);
+    }
+
+    @Override
     public void postCatchedException(Exception e) {
         e.printStackTrace();
     }

@@ -17,7 +17,7 @@ public class TraceLog implements IEntireLog {
     private Builder builder;
     private List<ICommonLog> logList;
     private String tag;
-    private boolean enable;
+    private volatile boolean enable = true;
 
     public TraceLog() {
         this(new Builder());
@@ -34,7 +34,6 @@ public class TraceLog implements IEntireLog {
     public void setBuilder(Builder builder) {
         this.builder = builder;
         this.logList = builder.logList;
-        this.enable = builder.enable;
         this.tag = builder.tag;
 
         for (ICommonLog log : logList) {
@@ -54,11 +53,13 @@ public class TraceLog implements IEntireLog {
         return defaultLog;
     }
 
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     @Override
     public void v(String tag, String message) {
-        if (!enable) {
-            return;
-        }
+        if (!enable) return;
         for (ICommonLog log : logList) {
             log.v(tag, message);
         }
@@ -66,9 +67,7 @@ public class TraceLog implements IEntireLog {
 
     @Override
     public void d(String tag, String message) {
-        if (!enable) {
-            return;
-        }
+        if (!enable) return;
         for (ICommonLog log : logList) {
             log.d(tag, message);
         }
@@ -76,9 +75,7 @@ public class TraceLog implements IEntireLog {
 
     @Override
     public void i(String tag, String message) {
-        if (!enable) {
-            return;
-        }
+        if (!enable) return;
         for (ICommonLog log : logList) {
             log.i(tag, message);
         }
@@ -86,9 +83,7 @@ public class TraceLog implements IEntireLog {
 
     @Override
     public void w(String tag, String message) {
-        if (!enable) {
-            return;
-        }
+        if (!enable) return;
         for (ICommonLog log : logList) {
             log.w(tag, message);
         }
@@ -96,19 +91,31 @@ public class TraceLog implements IEntireLog {
 
     @Override
     public void e(String tag, String message) {
-        if (!enable) {
-            return;
-        }
+        if (!enable) return;
         for (ICommonLog log : logList) {
             log.e(tag, message);
         }
     }
 
     @Override
-    public void postCatchedException(Exception e) {
-        if (!enable) {
-            return;
+    public void json(String tag, String message) {
+        if (!enable) return;
+        for (ICommonLog log : logList) {
+            log.json(tag, message);
         }
+    }
+
+    @Override
+    public void xml(String tag, String message) {
+        if (!enable) return;
+        for (ICommonLog log : logList) {
+            log.xml(tag, message);
+        }
+    }
+
+    @Override
+    public void postCatchedException(Exception e) {
+        if (!enable) return;
         for (ICommonLog log : logList) {
             log.postCatchedException(e);
         }
@@ -116,63 +123,46 @@ public class TraceLog implements IEntireLog {
 
     @Override
     public void v(String message) {
-        if (!enable) {
-            return;
-        }
-        for (ICommonLog log : logList) {
-            log.v(tag, message);
-        }
+        v(tag, message);
     }
 
     @Override
     public void d(String message) {
-        if (!enable) {
-            return;
-        }
-        for (ICommonLog log : logList) {
-            log.d(tag, message);
-        }
+        d(tag, message);
     }
 
     @Override
     public void i(String message) {
-        if (!enable) {
-            return;
-        }
-        for (ICommonLog log : logList) {
-            log.i(tag, message);
-        }
+        i(tag, message);
     }
 
     @Override
     public void w(String message) {
-        if (!enable) {
-            return;
-        }
-        for (ICommonLog log : logList) {
-            log.w(tag, message);
-        }
+        w(tag, message);
     }
 
     @Override
     public void e(String message) {
-        if (!enable) {
-            return;
-        }
-        for (ICommonLog log : logList) {
-            log.e(tag, message);
-        }
+        e(tag, message);
+    }
+
+    @Override
+    public void json(String message) {
+        json(tag, message);
+    }
+
+    @Override
+    public void xml(String message) {
+        xml(tag, message);
     }
 
     public static class Builder {
         List<ICommonLog> logList = new ArrayList<>();
         String tag;
-        boolean enable;
 
         public Builder() {
             //default config
             this.tag = "TranceLog";
-            this.enable = true;
         }
 
         //添加ILog实现类
@@ -186,12 +176,6 @@ public class TraceLog implements IEntireLog {
         //设置默认Tag
         public Builder setDefaultTag(String tag) {
             this.tag = tag;
-            return this;
-        }
-
-        //是否启用日志打印
-        public Builder setEnable(boolean enable) {
-            this.enable = enable;
             return this;
         }
 

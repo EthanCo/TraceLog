@@ -16,5 +16,9 @@ public interface ICommonLog {
 
     void e(String tag, String message);
 
+    void json(String tag, String message);
+
+    void xml(String tag, String message);
+
     void postCatchedException(Exception e);
 }

@@ -108,6 +108,16 @@ public class LocalRecordLog implements ICommonLog, IInit {
     }
 
     @Override
+    public void json(String tag, String message) {
+        saveLogToFile(tag, message);
+    }
+
+    @Override
+    public void xml(String tag, String message) {
+        saveLogToFile(tag, message);
+    }
+
+    @Override
     public void postCatchedException(Exception e) {
         saveLogToFile(">> Exception <<", e.getMessage());
     }

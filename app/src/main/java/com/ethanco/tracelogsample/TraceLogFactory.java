@@ -55,8 +55,8 @@ public class TraceLogFactory {
                     //.addLog(new DefaultLog())    //默认Log
                     .addLog(recordLog) //日志保存至本地文件
                     .setDefaultTag("MyTag")
-                    .setEnable(BuildConfig.DEBUG)
                     .build();
+            localLog.setEnable(BuildConfig.DEBUG);
         }
         return localLog;
     }

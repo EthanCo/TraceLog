@@ -37,6 +37,16 @@ public class LogProxy implements IEntireLog {
         if (debug) log.e(msg);
     }
 
+    @Override
+    public void json(String message) {
+        if (debug) log.json(message);
+    }
+
+    @Override
+    public void xml(String message) {
+        if (debug) log.xml(message);
+    }
+
     public void v(String tag, String message) {
         if (debug) log.v(tag, message);
     }
@@ -55,6 +65,16 @@ public class LogProxy implements IEntireLog {
 
     public void e(String tag, String message) {
         if (debug) log.e(tag, message);
+    }
+
+    @Override
+    public void json(String tag, String message) {
+        if (debug) log.json(tag, message);
+    }
+
+    @Override
+    public void xml(String tag, String message) {
+        if (debug) log.xml(tag, message);
     }
 
     public void postCatchedException(Exception e) {
