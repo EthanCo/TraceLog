@@ -7,9 +7,9 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 
-import com.ethanco.logbase.ICommonLog;
-import com.ethanco.tracelog.abs.IInit;
+import com.ethanco.logbase.Trace;
 import com.ethanco.tracelog.utils.Util;
 
 import java.io.File;
@@ -20,7 +20,7 @@ import java.util.Date;
  * Created by EthanCo on 2016/10/12.
  */
 
-public class LocalRecordLog implements ICommonLog, IInit {
+public class LocalRecordLog extends Trace {
 
     private Context context = null;
     private final String fileSuffix = ".log";
@@ -44,6 +44,7 @@ public class LocalRecordLog implements ICommonLog, IInit {
         this.folder = folder;
         this.maxCacheSize = maxCacheSize;
         this.useCacheDir = useCacheDir;
+        init();
     }
 
     public LocalRecordLog(Context context, int maxCacheSize, String folder, String fileName) {
@@ -51,21 +52,25 @@ public class LocalRecordLog implements ICommonLog, IInit {
         this.maxCacheSize = maxCacheSize;
         this.folder = folder;
         this.fileName = fileName;
+        init();
     }
 
     public LocalRecordLog(Context context, String folder, String fileName) {
         this.context = context;
         this.fileName = fileName;
         this.folder = folder;
+        init();
     }
 
     public LocalRecordLog(Context context, int maxCacheSize) {
         this.context = context;
         this.maxCacheSize = maxCacheSize;
+        init();
     }
 
     public LocalRecordLog(Context context) {
         this.context = context;
+        init();
     }
 
     /**
@@ -75,10 +80,10 @@ public class LocalRecordLog implements ICommonLog, IInit {
     public LocalRecordLog(Context context, String path) {
         this.context = context;
         this.path = path;
+        init();
     }
 
-    @Override
-    public void init() {
+    private void init() {
         if (TextUtils.isEmpty(path)) {
             String filePath = generateDir(context, folder);
             this.path = generatePath(filePath);
@@ -90,43 +95,17 @@ public class LocalRecordLog implements ICommonLog, IInit {
     }
 
     @Override
-    public void v(String tag, String message) {
-        saveLogToFile(tag, message);
-    }
-
-    @Override
-    public void d(String tag, String message) {
-        saveLogToFile(tag, message);
-    }
-
-    @Override
-    public void i(String tag, String message) {
-        saveLogToFile(tag, message);
-    }
-
-    @Override
-    public void w(String tag, String message) {
-        saveLogToFile(tag, message);
-    }
-
-    @Override
-    public void e(String tag, String message) {
-        saveLogToFile(tag, message);
-    }
-
-    @Override
-    public void json(String tag, String message) {
-        saveLogToFile(tag, message);
-    }
-
-    @Override
-    public void xml(String tag, String message) {
-        saveLogToFile(tag, message);
-    }
-
-    @Override
-    public void postCatchedException(Exception e) {
-        saveLogToFile(">> Exception <<", e.getMessage());
+    protected void log(int priority, String tag, String message, Throwable t) {
+        if (t != null) {
+            if (TextUtils.isEmpty(message)) {
+                message = Log.getStackTraceString(t);
+            } else {
+                message += "\r\n" + Log.getStackTraceString(t);
+            }
+        }
+        if (!TextUtils.isEmpty(message)) {
+            saveLogToFile(tag, message);
+        }
     }
 
     private String generatePath(String dir) {
@@ -162,7 +141,6 @@ public class LocalRecordLog implements ICommonLog, IInit {
         writeHandler.sendMessage(msg);
     }
 
-
     private static class WriteHandler extends Handler {
         private long lastClearTime = 0;
         private final int maxCacheSize;
@@ -178,7 +156,7 @@ public class LocalRecordLog implements ICommonLog, IInit {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            
+
             saveLogToFile((String) msg.obj, path);
         }
 

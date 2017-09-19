@@ -2,55 +2,76 @@ package com.ethanco.tracelog.logs;
 
 import android.util.Log;
 
-import com.ethanco.logbase.ICommonLog;
+import com.ethanco.logbase.Trace;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * @Description 默认Log
- * Created by EthanCo on 2016/11/1.
+ * 基础日志
+ *
+ * @author EthanCo
+ * @since 2017/9/19
  */
 
-public class DefaultLog implements ICommonLog {
+public class DefaultLog extends Trace {
+    private static final int MAX_LOG_LENGTH = 4000;
+    private static final int MAX_TAG_LENGTH = 23;
+    private static final int CALL_STACK_INDEX = 5;
+    private static final Pattern ANONYMOUS_CLASS = Pattern.compile("(\\$\\d+)+$");
 
-    @Override
-    public void v(String tag, String message) {
-        Log.i(tag, message);
+    protected String createStackElementTag(StackTraceElement element) {
+        String tag = element.getClassName();
+        Matcher m = ANONYMOUS_CLASS.matcher(tag);
+        if (m.find()) {
+            tag = m.replaceAll("");
+        }
+        tag = tag.substring(tag.lastIndexOf('.') + 1);
+        return tag.length() > MAX_TAG_LENGTH ? tag.substring(0, MAX_TAG_LENGTH) : tag;
     }
 
     @Override
-    public void d(String tag, String message) {
-        Log.d(tag, message);
+    protected final String getTag() {
+        String tag = super.getTag();
+        if (tag != null) {
+            return tag;
+        }
+
+        // DO NOT switch this to Thread.getCurrentThread().getStackTrace(). The test will pass
+        // because Robolectric runs them on the JVM but on Android the elements are different.
+        StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+        if (stackTrace.length <= CALL_STACK_INDEX) {
+            throw new IllegalStateException(
+                    "Synthetic stacktrace didn't have enough elements: are you using proguard?");
+        }
+        return createStackElementTag(stackTrace[CALL_STACK_INDEX]);
     }
 
     @Override
-    public void i(String tag, String message) {
-        Log.i(tag, message);
-    }
+    protected void log(int priority, String tag, String message, Throwable t) {
+        if (message.length() < MAX_LOG_LENGTH) {
+            if (priority == Log.ASSERT) {
+                Log.wtf(tag, message);
+            } else {
+                Log.println(priority, tag, message);
+            }
+            return;
+        }
 
-    @Override
-    public void w(String tag, String message) {
-        Log.w(tag, message);
-    }
-
-    @Override
-    public void e(String tag, String message) {
-        Log.e(tag, message);
-    }
-
-    @Override
-    public void json(String tag, String message) {
-        //直接打印
-        i(tag, message);
-    }
-
-    @Override
-    public void xml(String tag, String message) {
-        //直接打印
-        i(tag, message);
-    }
-
-    @Override
-    public void postCatchedException(Exception e) {
-        e.printStackTrace();
+        // Split by line, then ensure each line can fit into Log's maximum length.
+        for (int i = 0, length = message.length(); i < length; i++) {
+            int newline = message.indexOf('\n', i);
+            newline = newline != -1 ? newline : length;
+            do {
+                int end = Math.min(newline, i + MAX_LOG_LENGTH);
+                String part = message.substring(i, end);
+                if (priority == Log.ASSERT) {
+                    Log.wtf(tag, part);
+                } else {
+                    Log.println(priority, tag, part);
+                }
+                i = end;
+            } while (i < newline);
+        }
     }
 }

@@ -5,7 +5,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -194,6 +198,95 @@ public class Util {
             System.out.println("文件或者文件夹不存在:"+file.getAbsolutePath());
             return 0;
         }
+    }
+
+    /**
+     * Returns true if a and b are equal, including if they are both null.
+     * <p><i>Note: In platform versions 1.1 and earlier, this method only worked well if
+     * both the arguments were instances of String.</i></p>
+     *
+     * @param a first CharSequence to check
+     * @param b second CharSequence to check
+     * @return true if a and b are equal
+     * <p>
+     * NOTE: Logic slightly change due to strict policy on CI -
+     * "Inner assignments should be avoided"
+     */
+    static boolean equals(CharSequence a, CharSequence b) {
+        if (a == b) return true;
+        if (a != null && b != null) {
+            int length = a.length();
+            if (length == b.length()) {
+                if (a instanceof String && b instanceof String) {
+                    return a.equals(b);
+                } else {
+                    for (int i = 0; i < length; i++) {
+                        if (a.charAt(i) != b.charAt(i)) return false;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static String getStackTraceString(Throwable tr) {
+        if (tr == null) {
+            return "";
+        }
+
+        // This is to reduce the amount of log spew that apps do in the non-error
+        // condition of the network being unavailable.
+        Throwable t = tr;
+        while (t != null) {
+            if (t instanceof UnknownHostException) {
+                return "";
+            }
+            t = t.getCause();
+        }
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        tr.printStackTrace(pw);
+        pw.flush();
+        return sw.toString();
+    }
+
+    public static String toString(Object object) {
+        if (object == null) {
+            return "null";
+        }
+        if (!object.getClass().isArray()) {
+            return object.toString();
+        }
+        if (object instanceof boolean[]) {
+            return Arrays.toString((boolean[]) object);
+        }
+        if (object instanceof byte[]) {
+            return Arrays.toString((byte[]) object);
+        }
+        if (object instanceof char[]) {
+            return Arrays.toString((char[]) object);
+        }
+        if (object instanceof short[]) {
+            return Arrays.toString((short[]) object);
+        }
+        if (object instanceof int[]) {
+            return Arrays.toString((int[]) object);
+        }
+        if (object instanceof long[]) {
+            return Arrays.toString((long[]) object);
+        }
+        if (object instanceof float[]) {
+            return Arrays.toString((float[]) object);
+        }
+        if (object instanceof double[]) {
+            return Arrays.toString((double[]) object);
+        }
+        if (object instanceof Object[]) {
+            return Arrays.deepToString((Object[]) object);
+        }
+        return "Couldn't find a correct type for the object";
     }
 
 
