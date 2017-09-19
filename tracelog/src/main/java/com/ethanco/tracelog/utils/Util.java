@@ -48,7 +48,7 @@ public class Util {
             return null;
         }
         if (format == null || format.length() == 0) {
-            format = "yyyy-MM-dd HH:mm:ss";
+            format = "yy-MM-dd HH:mm:ss";
         }
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         String s = sdf.format(d);
