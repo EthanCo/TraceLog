@@ -36,8 +36,6 @@ public class LTest {
         L.i(DataHelper.getObject());
         L.w(DataHelper.getObject());
         L.e(DataHelper.getObject());
-        L.d(DataHelper.getJson());
-        L.d(DataHelper.getXml());
 
         L.v(TAG, "vvvvvvvv");
         L.d(TAG, "dddddddd");
