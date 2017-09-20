@@ -31,6 +31,13 @@ public class LTest {
         L.e("eeeeeeee");
         L.json(DataHelper.getJson());
         L.xml(DataHelper.getXml());
+        L.v(DataHelper.getObject());
+        L.d(DataHelper.getObject());
+        L.i(DataHelper.getObject());
+        L.w(DataHelper.getObject());
+        L.e(DataHelper.getObject());
+        L.d(DataHelper.getJson());
+        L.d(DataHelper.getXml());
 
         L.v(TAG, "vvvvvvvv");
         L.d(TAG, "dddddddd");
@@ -39,5 +46,10 @@ public class LTest {
         L.e(TAG, "eeeeeeee");
         L.json(TAG, DataHelper.getJson());
         L.xml(TAG, DataHelper.getXml());
+        L.t(TAG).v(DataHelper.getObject());
+        L.t(TAG).d(DataHelper.getObject());
+        L.t(TAG).i(DataHelper.getObject());
+        L.t(TAG).w(DataHelper.getObject());
+        L.t(TAG).e(DataHelper.getObject());
     }
 }
