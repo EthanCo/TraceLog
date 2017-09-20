@@ -3,7 +3,7 @@
 1. 支持传统日志打印
 3. 支持日志的格式化输出
 4. 支持日志的快速定位
-5. 支持打印Json、XML、List、Map、Objec等
+5. 支持打印Json、XML、List、Map、Object等
 2. 支持日志保存至本地
 3. 支持一个App中有多个TraceLog实例
 3. 支持扩展 (上传日志至服务器等)    
