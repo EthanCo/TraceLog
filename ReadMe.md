@@ -29,9 +29,9 @@ Add it in your root build.gradle at the end of repositories:
 		compile 'com.github.EthanCo.TraceLog:logglobal:2.0.3'
 	}
 
-> TraceLog是核心库，必须要依赖  
+> TraceLog是核心库，必须依赖  
 > loggerex是Logger扩展库，使用Looger来进行打印时，需要依赖该库  
-> logglobal是全局打印扩展库，直接使用L.java这个类全局可调用
+> logglobal是全局打印扩展库，可通过L.java这个类全局使用日志
 
 ## 使用 ##
 
