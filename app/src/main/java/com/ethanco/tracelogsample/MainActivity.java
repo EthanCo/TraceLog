@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.ethanco.tracelog.TraceLog;
+import com.ethanco.tracelog.logs.DiskLogTrace;
 import com.ethanco.tracelogsample.databinding.ActivityMainBinding;
 import com.ethanco.tracelogsample.test.LTest;
 import com.ethanco.tracelogsample.test.LoggerTest;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
             //.addTrace(TraceLog.defaultTrace())
             .setDefaultTag("DefaultTag")
             .addTrace(App.getInstance().loggerTrace)
-            //.addTrace(new DiskLogTrace(App.getInstance()))
+            .addTrace(new DiskLogTrace(App.getInstance()))
             .build();
     private ActivityMainBinding binding;
 

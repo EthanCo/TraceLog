@@ -1,11 +1,14 @@
 # TraceLog #
 
-
-1. 传统日志打印
+1. 支持传统日志打印
+3. 支持日志的格式化输出
+4. 支持日志的快速定位
+5. 支持打印Json、XML、List、Map、Objec等
 2. 支持日志保存至本地
-3. 支持扩展 (上传日志至服务器等)  
+3. 支持一个App中有多个TraceLog实例
+3. 支持扩展 (上传日志至服务器等)    
 
-> 未来将添加的功能  1.打印json字符串 2.快速定位 等  
+![](http://oqk78xit2.bkt.clouddn.com/Log_json_1.png)
 
 ## 添加依赖 ##
 ### Step 1. Add the JitPack repository to your build file ###
@@ -21,34 +24,57 @@ Add it in your root build.gradle at the end of repositories:
 ### Step 2. Add the dependency ###
 
 	dependencies {
-	        compile 'com.github.EthanCo:TraceLog:1.0.4'
+        compile 'com.github.EthanCo:TraceLog:2.0.3'
+		compile 'com.github.EthanCo.TraceLog:loggerex:2.0.3'
+		compile 'com.github.EthanCo.TraceLog:logglobal:2.0.3'
 	}
 
-### 使用 ###
+> TraceLog是核心库，必须要依赖  
+> loggerex是Logger扩展库，使用Looger来进行打印时，需要依赖该库  
+> logglobal是全局打印扩展库，直接使用L.java这个类全局可调用
 
-TraceLog采用建造者模式，所有配置在Builder中进行配置即可。  
+## 使用 ##
 
-**初始化**
+### 初始化
 
-	TraceLog localLog = new TraceLog.Builder(App.getInstance()) //对于某些实现了IInit接口的ILog实现类，需要传入Context
-	            .addLog(new DefaultLog())     //默认日志
-	            .addLog(new LocalRecordLog()) //日志保存至本地文件
-	            .setMaxFileCacheSize(1024 * 1024 * 10) //日志文件最大缓存，以B为单位
-	            .setFolder("MyFolder") //日志保存文件夹，如果不设置，默认为TraceLog
-	            .setFileName("MyFileName") //日志文件文件名，如果不设置，默认为TraceLog
-	            .setDefaultTag("MyTag") //默认tag
-	            .setEnable(BuildConfig.DEBUG) //是否启用
-	            .build();
+	TraceLog traceLog = new TraceLog.Builder()
+        //.addTrace(TraceLog.defaultTrace()) //默认日志
+        .setDefaultTag("DefaultTag")  //默认TAG
+        .addTrace(new LoggerTrace()) //使用Logger进行日志输出
+        //.addTrace(new DiskLogTrace(context)) //将日志保存至本地
+        .build();
 
-**打印**  
+### 基础打印  
 
-	localLog.i("MainActivity onCreate");
+	traceLog.d("onCreate");
+	traceLog.t(TAG).i("onCreate");
 
-**如有多个TranceLog实现类，建议采用Factory，进行统一处理，并可实现快速替换** 
+### 扩展打印
+	
+	traceLog.json(json)
+	traceLog.json(xml)
+	traceLog.i(list)
+	traceLog.i(map)
+	traceLog.i(object)
 
-	//TraceLog newLog = TraceLogFactory.create(TraceLogFactory.Type.BUGLY);
-    TraceLog newLog = TraceLogFactory.create(TraceLogFactory.Type.LOCAL);
-    newLog.i("xxxxxxxxx"); 
+### 使用L.java便捷打印
+要使用L.java全局便捷打印需要额外添加以下依赖  
 
-**具体使用请查看Sample**  
+	dependencies {
+     	compile 'com.github.EthanCo.TraceLog:logglobal:2.0.3'
+	}  
 
+#### 初始化  
+
+    TraceLog traceLog = new TraceLog.Builder()
+            .addTrace(new LoggerTrace(2, 6))
+            .build();
+    L.init(traceLog);  
+
+### 应用内全局可使用  
+
+	L.i("hello world !");  
+
+## 其他
+
+> 感谢 [Looger](https://github.com/orhanobut/logger) | [LogUtils](https://github.com/pengwei1024/LogUtils) | [Timber](https://github.com/JakeWharton/timber)
