@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$/logbase" />
             <option value="$PROJECT_DIR$/loggerex" />
             <option value="$PROJECT_DIR$/logglobal" />
-            <option value="$PROJECT_DIR$/logproxy" />
             <option value="$PROJECT_DIR$/tracelog" />
           </set>
         </option>

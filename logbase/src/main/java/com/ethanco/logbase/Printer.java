@@ -26,6 +26,14 @@ public interface Printer {
 
     void d(Object object);
 
+    void e(Object object);
+
+    void w(Object object);
+
+    void i(Object object);
+
+    void v(Object object);
+
     void json(String json);
 
     void xml(String xml);

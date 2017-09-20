@@ -53,6 +53,26 @@ public class TraceLog implements Printer {
     }
 
     @Override
+    public void e(Object object) {
+        impl.e(object);
+    }
+
+    @Override
+    public void w(Object object) {
+        impl.w(object);
+    }
+
+    @Override
+    public void i(Object object) {
+        impl.i(object);
+    }
+
+    @Override
+    public void v(Object object) {
+        impl.v(object);
+    }
+
+    @Override
     public void e(String message, Object... args) {
         impl.e(message, args);
     }

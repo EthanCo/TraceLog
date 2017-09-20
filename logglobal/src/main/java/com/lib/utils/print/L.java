@@ -17,15 +17,11 @@ public class L {
     }
 
     public static void e(String msg, Throwable tr) {
-        traceLog.e(msg, tr);
+        traceLog.e(tr, msg);
     }
 
     public static void w(String msg) {
         traceLog.w(msg);
-    }
-
-    public static void w(String msg, Throwable tr) {
-        traceLog.w(msg, tr);
     }
 
     public static void i(String msg) {
@@ -49,31 +45,27 @@ public class L {
     }
 
     public static void e(String tag, String msg) {
-        traceLog.e(tag, msg);
+        traceLog.t(tag).e(msg);
     }
 
     public static void e(String tag, String msg, Throwable tr) {
-        traceLog.e(tag, msg, tr);
+        traceLog.t(tag).e(tr, msg);
     }
 
     public static void w(String tag, String msg) {
-        traceLog.w(tag, msg);
-    }
-
-    public static void w(String tag, String msg, Throwable tr) {
-        traceLog.w(tag, msg, tr);
+        traceLog.t(tag).w(msg);
     }
 
     public static void i(String tag, String msg) {
-        traceLog.i(tag, msg);
+        traceLog.t(tag).i(msg);
     }
 
     public static void d(String tag, String msg) {
-        traceLog.d(tag, msg);
+        traceLog.t(tag).d(msg);
     }
 
     public static void v(String tag, String msg) {
-        traceLog.v(tag, msg);
+        traceLog.t(tag).v(msg);
     }
 
     public static void json(String tag, String json) {

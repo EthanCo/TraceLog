@@ -1,37 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.ethanco.tracelogsample.MainActivity">
-
-    <Button
-        android:id="@+id/btn_print_log"
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="打印日志" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.ethanco.tracelogsample.MainActivity">
 
-    <Button
-        android:id="@+id/btn_set_not_print_log"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="设置不打印" />
+        <Button
+            android:id="@+id/btn_print_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="打印日志" />
 
-    <Button
-        android:id="@+id/btn_set_print_log"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="设置为打印" />
+        <Button
+            android:id="@+id/btn_logger_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LoggerTrace测试" />
 
-    <Button
-        android:id="@+id/btn_simple_log"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Simple Log" />
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_l_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="L测试" />
+
+    </LinearLayout>
+</layout>

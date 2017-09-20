@@ -27,7 +27,10 @@ import javax.xml.transform.stream.StreamSource;
 
 import static android.util.Log.ASSERT;
 import static android.util.Log.DEBUG;
+import static android.util.Log.ERROR;
+import static android.util.Log.INFO;
 import static android.util.Log.VERBOSE;
+import static android.util.Log.WARN;
 import static com.ethanco.tracelog.parser.ObjectUtil.objectToString;
 
 /**
@@ -69,6 +72,26 @@ public class TraceLogImpl implements Printer, Config {
     public void d(Object object) {
         //log(DEBUG, null, Util.toString(object));
         log(DEBUG, null, objectToString(object));
+    }
+
+    @Override
+    public void e(Object object) {
+        log(ERROR, null, objectToString(object));
+    }
+
+    @Override
+    public void w(Object object) {
+        log(WARN, null, objectToString(object));
+    }
+
+    @Override
+    public void i(Object object) {
+        log(INFO, null, objectToString(object));
+    }
+
+    @Override
+    public void v(Object object) {
+        log(VERBOSE, null, objectToString(object));
     }
 
     @Override

@@ -16,15 +16,30 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 public class LoggerTrace implements Trace {
 
     public LoggerTrace() {
+        this(2, 5);
+    }
+
+    /**
+     * @param methodCount  打印的方法层级
+     * @param methodOffset 方法的位移
+     */
+    public LoggerTrace(int methodCount, int methodOffset) {
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)   // (Optional) Whether to show thread info or not. Default true
-                .methodCount(2)          // (Optional) How many method line to show. Default 2
-                .methodOffset(5)         // (Optional) Hides internal method calls up to offset. Default 0
-                //.logStrategy()         // (Optional) Changes the log strategy to print out. Default LogCat
-                .tag("Logger")           // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .showThreadInfo(true)              // (Optional) Whether to show thread info or not. Default true
+                .methodCount(methodCount)           // (Optional) How many method line to show. Default 2
+                .methodOffset(methodOffset)         // (Optional) Hides internal method calls up to offset. Default 0
+                //.logStrategy()                    // (Optional) Changes the log strategy to print out. Default LogCat
+                .tag("Logger")                      // (Optional) Global tag for every log. Default PRETTY_LOGGER
                 .build();
+        Logger.clearLogAdapters();
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
     }
+
+    public LoggerTrace(FormatStrategy formatStrategy) {
+        Logger.clearLogAdapters();
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+    }
+
 
     @Override
     public boolean isLoggable(String tag, int priority) {
