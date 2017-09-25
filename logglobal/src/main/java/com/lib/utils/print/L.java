@@ -64,8 +64,12 @@ public class L {
         traceLog.e(object);
     }
 
-    public static TraceLog t(String tag) {
-        return traceLog.t(tag);
+    public static PrinterWrap t(String tag) {
+        return getPrintWrap(traceLog, tag);
+    }
+
+    private static PrinterWrap getPrintWrap(TraceLog traceLog, String tag) {
+        return new PrinterWrap(traceLog.t(tag));
     }
 
 

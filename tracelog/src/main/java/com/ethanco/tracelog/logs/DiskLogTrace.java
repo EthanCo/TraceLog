@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.ethanco.logbase.Trace;
@@ -120,10 +121,23 @@ public class DiskLogTrace implements Trace {
     }
 
     private void saveLogToFile(String tag, String message) {
-        String str = tag + ": " + message;
+        StringBuilder sb = generateLog(tag, message);
         Message msg = Message.obtain();
-        msg.obj = str;
+        msg.obj = sb.toString();
         writeHandler.sendMessage(msg);
+    }
+
+    @NonNull
+    private StringBuilder generateLog(String tag, String message) {
+        String time = Util.date2Str(new Date());
+        StringBuilder sb = new StringBuilder();
+        sb.append(time);
+        sb.append(" ");
+        sb.append(tag);
+        sb.append(":");
+        sb.append(message);
+        sb.append("\r\n");
+        return sb;
     }
 
     @Override
@@ -159,11 +173,7 @@ public class DiskLogTrace implements Trace {
 
         private void saveLogToFile(String message, String path) {
             preSaveLogToFile(path);
-
-            String time = Util.date2Str(new Date());
-            String str = time + " " + message + "\r\n";
-
-            Util.saveStrToFile(str, path, true);
+            Util.saveStrToFile(message, path, true);
         }
 
         private void preSaveLogToFile(String path) {

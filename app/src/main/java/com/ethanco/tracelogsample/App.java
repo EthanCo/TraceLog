@@ -21,6 +21,6 @@ public class App extends Application {
         super.onCreate();
         sInstance = this;
 
-        loggerTrace = (new LoggerTrace(3, 5));
+        loggerTrace = new LoggerTrace(3, 5);
     }
 }

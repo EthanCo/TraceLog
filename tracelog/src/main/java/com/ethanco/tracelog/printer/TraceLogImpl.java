@@ -175,7 +175,10 @@ public class TraceLogImpl implements Printer, Config {
     @Override
     public synchronized void log(int priority, String tag, String message, Throwable throwable) {
         if (throwable != null && message != null) {
-            message += " : " + Util.getStackTraceString(throwable);
+            StringBuilder sb = new StringBuilder(message);
+            sb.append(" : ");
+            sb.append(Util.getStackTraceString(throwable));
+            message = sb.toString();
         }
         if (throwable != null && message == null) {
             message = Util.getStackTraceString(throwable);

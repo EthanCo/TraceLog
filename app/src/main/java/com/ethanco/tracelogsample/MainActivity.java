@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LTest.test();
+                //LTest.test2Hierarchy();
             }
         });
 

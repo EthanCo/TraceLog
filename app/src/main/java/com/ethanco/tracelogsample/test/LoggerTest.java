@@ -29,7 +29,9 @@ import java.util.List;
  */
 
 public class LoggerTest {
-    public static void test(){
+    public static final String TAG = "Z-LoggerTest";
+
+    public static void test() {
         Context context = App.getInstance();
         TraceLog traceLog = new TraceLog.Builder()
                 //.addTrace(TraceLog.defaultTrace())
@@ -139,5 +141,8 @@ public class LoggerTest {
         traceLog.d(handler.obtainMessage(1));
 
         traceLog.e("test 12345#");
+
+        traceLog.t(TAG).i("2--iiiiii");
+        traceLog.i(TAG, "3--iiiiii");
     }
 }

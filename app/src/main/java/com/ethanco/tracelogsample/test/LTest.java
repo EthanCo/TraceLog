@@ -44,10 +44,32 @@ public class LTest {
         L.e(TAG, "eeeeeeee");
         L.json(TAG, DataHelper.getJson());
         L.xml(TAG, DataHelper.getXml());
+
+        L.t(TAG).v("2vvvvvvvv");
+        L.t(TAG).d("2dddddddd");
+        L.t(TAG).i("2iiiiiiii");
+        L.t(TAG).w("2wwwwwwww");
+        L.t(TAG).e("2eeeeeeee");
+
         L.t(TAG).v(DataHelper.getObject());
         L.t(TAG).d(DataHelper.getObject());
         L.t(TAG).i(DataHelper.getObject());
         L.t(TAG).w(DataHelper.getObject());
         L.t(TAG).e(DataHelper.getObject());
+    }
+
+    public static void test2Hierarchy() {
+        LoggerTrace loggerTrace = App.getInstance().loggerTrace;
+        TraceLog traceLog = new TraceLog.Builder()
+                //.addTrace(TraceLog.defaultTrace()) 默认日志
+                .addTrace(loggerTrace) //Logger日志，正式使用methodOffset应为6，这里为兼容其他测试，设置的是5
+                .build();
+        L.init(traceLog);
+
+        L.i("test2Hierarchy-->1");
+        L.i(TAG, "test2Hierarchy-->2");
+        L.t(TAG).i("test2Hierarchy-->3");
+        L.t(TAG).i(DataHelper.getObject());
+        L.i(DataHelper.getObject());
     }
 }
