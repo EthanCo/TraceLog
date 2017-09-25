@@ -24,7 +24,7 @@ Add it in your root build.gradle at the end of repositories:
 ### Step 2. Add the dependency ###
 
 	dependencies {
-        compile 'com.github.EthanCo:TraceLog:2.0.3'
+		compile 'com.github.EthanCo:TraceLog:2.0.3'
 		compile 'com.github.EthanCo.TraceLog:loggerex:2.0.3'
 		compile 'com.github.EthanCo.TraceLog:logglobal:2.0.3'
 	}
