@@ -7,6 +7,7 @@
 2. 支持日志保存至本地
 3. 支持一个App中有多个TraceLog实例
 3. 支持扩展 (上传日志至服务器等)    
+4. 支持便捷全局打印使用
 
 ![](http://oqk78xit2.bkt.clouddn.com/Log_json_1.png)
 
@@ -24,9 +25,9 @@ Add it in your root build.gradle at the end of repositories:
 ### Step 2. Add the dependency ###
 
 	dependencies {
-		compile 'com.github.EthanCo:TraceLog:2.0.3'
-		compile 'com.github.EthanCo.TraceLog:loggerex:2.0.3'
-		compile 'com.github.EthanCo.TraceLog:logglobal:2.0.3'
+		compile 'com.github.EthanCo:TraceLog:2.1.0'
+		compile 'com.github.EthanCo.TraceLog:loggerex:2.1.0'
+		compile 'com.github.EthanCo.TraceLog:logglobal:2.1.0'
 	}
 
 > TraceLog是核心库，必须依赖  
@@ -66,10 +67,12 @@ Add it in your root build.gradle at the end of repositories:
 
 #### 初始化  
 
-    TraceLog traceLog = new TraceLog.Builder()
-            .addTrace(new LoggerTrace(2, 6))
-            .build();
-    L.init(traceLog);  
+    //TraceLog traceLog = new TraceLog.Builder()
+    //      .addTrace(new LoggerTrace(2, 6))
+    //      .build();
+    //L.init(traceLog);
+
+  	L.init();
 
 ### 应用内全局可使用  
 
