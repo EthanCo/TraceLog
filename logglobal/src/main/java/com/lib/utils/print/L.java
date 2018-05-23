@@ -32,6 +32,22 @@ public class L {
      * 初始化L日志类
      *
      * @param context
+     * @param saveToDisk 是否保存到本地
+     */
+    public static void init(Context context, boolean saveToDisk) {
+        TraceLog.Builder builder = new TraceLog.Builder()
+                .addTrace(new LTrace());
+        if (saveToDisk) {
+            builder.addTrace(new DiskLogTrace(context));
+        }
+        TraceLog traceLog = builder.build();
+        L.init(traceLog);
+    }
+
+    /**
+     * 初始化L日志类
+     *
+     * @param context
      * @param defTag 默认tag
      * @param saveToDisk 是否保存到本地
      */
