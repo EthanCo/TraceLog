@@ -17,12 +17,15 @@ public class LTest {
     public static final String TAG = "Z-LTest";
 
     public static void test() {
-        LoggerTrace loggerTrace = App.getInstance().loggerTrace;
+        /*LoggerTrace loggerTrace = App.getInstance().loggerTrace;
         TraceLog traceLog = new TraceLog.Builder()
                 //.addTrace(TraceLog.defaultTrace()) 默认日志
                 .addTrace(loggerTrace) //Logger日志，正式使用methodOffset应为6，这里为兼容其他测试，设置的是5
+                //.addTrace(new LTrace())
                 .build();
-        L.init(traceLog);
+        L.init(traceLog);*/
+
+        L.init();
 
         L.v("vvvvvvvv");
         L.d("dddddddd");

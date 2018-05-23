@@ -166,7 +166,8 @@ public class TraceLogImpl implements Printer, Config {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(xmlInput, xmlOutput);
-            d(xmlOutput.getWriter().toString().replaceFirst(">", ">\n"));
+            //d(xmlOutput.getWriter().toString().replaceFirst(">", ">\n"));
+            log(DEBUG, null, objectToString(xmlOutput.getWriter().toString().replaceFirst(">", ">\n")));
         } catch (TransformerException e) {
             e("Invalid xml");
         }
