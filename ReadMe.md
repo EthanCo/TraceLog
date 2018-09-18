@@ -62,7 +62,7 @@ Add it in your root build.gradle at the end of repositories:
 要使用L.java全局便捷打印需要额外添加以下依赖  
 
 	dependencies {
-     	compile 'com.github.EthanCo.TraceLog:logglobal:2.0.3'
+     	compile 'com.github.EthanCo.TraceLog:logglobal:2.1.0'
 	}  
 
 #### 初始化  
