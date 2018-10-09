@@ -3,7 +3,6 @@ package com.lib.utils.print;
 import android.content.Context;
 
 import com.ethanco.tracelog.TraceLog;
-import com.ethanco.tracelog.logs.DefaultLog;
 import com.ethanco.tracelog.logs.DiskLogTrace;
 
 /**

@@ -25,9 +25,9 @@ Add it in your root build.gradle at the end of repositories:
 ### Step 2. Add the dependency ###
 
 	dependencies {
-		compile 'com.github.EthanCo:TraceLog:2.1.0'
-		compile 'com.github.EthanCo.TraceLog:loggerex:2.1.0'
-		compile 'com.github.EthanCo.TraceLog:logglobal:2.1.0'
+		compile 'com.github.EthanCo:TraceLog:2.3.0'
+		compile 'com.github.EthanCo.TraceLog:loggerex:2.3.0'
+		compile 'com.github.EthanCo.TraceLog:logglobal:2.3.0'
 	}
 
 > TraceLog是核心库，必须依赖  
@@ -62,7 +62,7 @@ Add it in your root build.gradle at the end of repositories:
 要使用L.java全局便捷打印需要额外添加以下依赖  
 
 	dependencies {
-     	compile 'com.github.EthanCo.TraceLog:logglobal:2.1.0'
+     	compile 'com.github.EthanCo.TraceLog:logglobal:xx.xx.xx'
 	}  
 
 #### 初始化  
@@ -74,9 +74,19 @@ Add it in your root build.gradle at the end of repositories:
 
   	L.init();
 
-### 应用内全局可使用  
+#### 应用内全局可使用  
 
-	L.i("hello world !");  
+	L.i("hello world !");
+  
+### 使用DL.java便捷地打印日志并保存到本地
+
+#### 初始化
+ 
+	DL.init(context);  
+
+#### 应用内全局可使用  
+
+	DL.i("hello world !");
 
 ## 其他
 
