@@ -18,7 +18,7 @@ public class DL {
 
     public static void init(Context context) {
         TraceLog traceLog = new TraceLog.Builder()
-                .addTrace(new DefaultLog())
+                .addTrace(new LTrace()) //DefaultLog
                 .addTrace(new DiskLogTrace(context))
                 .build();
         init(traceLog);
@@ -26,7 +26,7 @@ public class DL {
 
     public static void init(String defTag, Context context) {
         TraceLog traceLog = new TraceLog.Builder()
-                .addTrace(new DefaultLog())
+                .addTrace(new LTrace())
                 .addTrace(new DiskLogTrace(context))
                 .setDefaultTag(defTag)
                 .build();
@@ -35,7 +35,7 @@ public class DL {
 
     public static void init(String defTag, Context context, String path) {
         TraceLog traceLog = new TraceLog.Builder()
-                .addTrace(new DefaultLog())
+                .addTrace(new LTrace())
                 .addTrace(new DiskLogTrace(context, path))
                 .setDefaultTag(defTag)
                 .build();
