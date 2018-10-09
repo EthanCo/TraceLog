@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TraceLogSample.iml" filepath="$PROJECT_DIR$/TraceLogSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TraceLog.iml" filepath="$PROJECT_DIR$/TraceLog.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/logbase/logbase.iml" filepath="$PROJECT_DIR$/logbase/logbase.iml" />
       <module fileurl="file://$PROJECT_DIR$/loggerex/loggerex.iml" filepath="$PROJECT_DIR$/loggerex/loggerex.iml" />

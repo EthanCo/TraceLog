@@ -8,6 +8,7 @@ import android.view.View;
 import com.ethanco.tracelog.TraceLog;
 import com.ethanco.tracelog.logs.DiskLogTrace;
 import com.ethanco.tracelogsample.databinding.ActivityMainBinding;
+import com.ethanco.tracelogsample.test.DLTest;
 import com.ethanco.tracelogsample.test.LTest;
 import com.ethanco.tracelogsample.test.LoggerTest;
 
@@ -48,5 +49,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnDlTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DLTest.test(App.getInstance());
+            }
+        });
     }
 }
