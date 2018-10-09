@@ -42,6 +42,8 @@ import static com.ethanco.tracelog.parser.ObjectUtil.objectToString;
 
 public class TraceLogImpl implements Printer, Config {
 
+    private static final String NEW_LINE = "\r\n";
+
     /**
      * It is used for json pretty print
      */
@@ -132,19 +134,37 @@ public class TraceLogImpl implements Printer, Config {
             return;
         }
         try {
-            json = json.trim();
+            boolean isNewLine = false;
+            if (json.startsWith(NEW_LINE)) {
+                isNewLine = true;
+                json = json.substring(2);
+                if (TextUtils.isEmpty(json)) {
+                    d("Empty/Null json content");
+                    return;
+                }
+                json = json.trim();
+            }
+
             if (json.startsWith("{")) {
                 JSONObject jsonObject = new JSONObject(json);
                 String message = jsonObject.toString(JSON_INDENT);
                 //d(message);
-                log(DEBUG, null, objectToString(message));
+                if (isNewLine) {
+                    log(DEBUG, null, NEW_LINE + objectToString(message));
+                } else {
+                    log(DEBUG, null, objectToString(message));
+                }
                 return;
             }
             if (json.startsWith("[")) {
                 JSONArray jsonArray = new JSONArray(json);
                 String message = jsonArray.toString(JSON_INDENT);
                 //d(message);
-                log(DEBUG, null, objectToString(message));
+                if (isNewLine) {
+                    log(DEBUG, null, NEW_LINE + objectToString(message));
+                } else {
+                    log(DEBUG, null, objectToString(message));
+                }
                 return;
             }
             e("Invalid Json");
@@ -160,6 +180,17 @@ public class TraceLogImpl implements Printer, Config {
             return;
         }
         try {
+            boolean isNewLine = false;
+            if (xml.startsWith(NEW_LINE)) {
+                isNewLine = true;
+                xml = xml.substring(2);
+                if (TextUtils.isEmpty(xml)) {
+                    d("Empty/Null xml content");
+                    return;
+                }
+                xml = xml.trim();
+            }
+
             Source xmlInput = new StreamSource(new StringReader(xml));
             StreamResult xmlOutput = new StreamResult(new StringWriter());
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -167,7 +198,11 @@ public class TraceLogImpl implements Printer, Config {
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(xmlInput, xmlOutput);
             //d(xmlOutput.getWriter().toString().replaceFirst(">", ">\n"));
-            log(DEBUG, null, objectToString(xmlOutput.getWriter().toString().replaceFirst(">", ">\n")));
+            if (isNewLine) {
+                log(DEBUG, null, NEW_LINE + objectToString(xmlOutput.getWriter().toString().replaceFirst(">", ">\n")));
+            } else {
+                log(DEBUG, null, objectToString(xmlOutput.getWriter().toString().replaceFirst(">", ">\n")));
+            }
         } catch (TransformerException e) {
             e("Invalid xml");
         }

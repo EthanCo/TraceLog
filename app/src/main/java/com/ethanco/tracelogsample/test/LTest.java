@@ -15,6 +15,7 @@ import com.lib.utils.print.L;
 
 public class LTest {
     public static final String TAG = "Z-LTest";
+    private static boolean isInited = false;
 
     public static void test() {
         /*LoggerTrace loggerTrace = App.getInstance().loggerTrace;
@@ -25,7 +26,10 @@ public class LTest {
                 .build();
         L.init(traceLog);*/
 
-        L.init();
+        if (!isInited) {
+            L.init();
+            isInited = true;
+        }
 
         L.v("vvvvvvvv");
         L.d("dddddddd");

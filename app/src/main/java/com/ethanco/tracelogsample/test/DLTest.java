@@ -17,6 +17,7 @@ import com.lib.utils.print.DL;
 
 public class DLTest {
     public static final String TAG = "Z-LTest";
+    private static boolean isInited = false;
 
     public static void test(Context context) {
         /*LoggerTrace loggerTrace = App.getInstance().loggerTrace;
@@ -27,7 +28,10 @@ public class DLTest {
                 .build();
         DL.init(traceLog);*/
 
-        DL.init(context);
+        if (!isInited) {
+            DL.init(context);
+            isInited = true;
+        }
 
         DL.v("vvvvvvvv");
         DL.d("dddddddd");
