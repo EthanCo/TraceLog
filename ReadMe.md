@@ -40,7 +40,7 @@ Add it in your root build.gradle at the end of repositories:
 
 	TraceLog traceLog = new TraceLog.Builder()
         //.addTrace(TraceLog.defaultTrace()) //默认日志
-        .setDefaultTag("DefaultTag")  //默认TAG
+         .setDefaultTag("DefaultTag")  //默认TAG
 	.addTrace(new DefaultLog()) //使用默认日志输出
         //.addTrace(new LoggerTrace()) //使用Logger进行日志输出
         //.addTrace(new DiskLogTrace(context)) //将日志保存至本地
