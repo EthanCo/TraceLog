@@ -5,8 +5,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.ethanco.tracelog.TraceLog;
-import com.ethanco.tracelog.logs.DefaultLog;
 import com.ethanco.tracelog.logs.DiskLogTrace;
+import com.ethanco.tracelog.logs.IndexLog;
+import com.ethanco.tracelog.utils.TranceFormat;
 
 
 /**
@@ -15,7 +16,7 @@ import com.ethanco.tracelog.logs.DiskLogTrace;
 public class L {
     public static boolean isDebug = true; //是否是调试状态
     private static int minLevel = 0x1;
-    private static int stackIndex = 5;
+
 
     public static final int V = 0x1;
     public static final int D = 0x2;
@@ -53,7 +54,7 @@ public class L {
     public static void init(Context context, boolean enable, boolean saveToDisk) {
         isDebug = enable;
         TraceLog.Builder builder = new TraceLog.Builder()
-                .addTrace(new DefaultLog());
+                .addTrace(new IndexLog());
         if (saveToDisk) {
             builder.addTrace(new DiskLogTrace(context, 1024 * 1024 * 100,
                     "Log", "Log", false));
@@ -86,9 +87,8 @@ public class L {
         traceLog.t(tag).e(tr, msg);
     }
 
-    private static void print(int type, String TAG, String msg) {
-        if (checkLog(type, msg)) return;
-        String message = getLogMessage(msg);
+    private static void print(int type, String TAG, String message) {
+        if (checkLog(type, message)) return;
 
         switch (type) {
             case V:
@@ -115,22 +115,6 @@ public class L {
         if (autoPrintStatckInfo && type > V) {
             traceLog.t(TAG).v(new StringBuilder(message).append(getStackInfo()));
         }
-    }
-
-    private static String getLogMessage(String msg) {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        String className = stackTrace[stackIndex].getFileName();
-        String methodName = stackTrace[stackIndex].getMethodName();
-        int lineNumber = stackTrace[stackIndex].getLineNumber();
-        //methodName = methodName.substring(0, 1).toUpperCase() + methodName.substring(1);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[ (").append(className).append(":")
-                .append(lineNumber).append(")#")
-                .append(methodName).append(" ] ")
-                .append(msg);
-
-        return stringBuilder.toString();
     }
 
     private static boolean checkLog(int type, String msg) {
@@ -170,24 +154,12 @@ public class L {
         print(V, TAG, msg);
     }
 
-    private static final String LINE_FEED = "\n    ";
-    private static final String AT = "at ";
-
     public static String getStackInfo() {
-        return getStackInfo("");
+        return TranceFormat.getStackInfo("");
     }
 
     public static String getStackInfo(String prefix) {
-        StringBuilder sb = new StringBuilder();
-        if (!TextUtils.isEmpty(prefix)) {
-            sb.append(prefix);
-        }
-        sb.append(LINE_FEED);
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        for (int i = 4; i < stackTrace.length; i++) {
-            sb.append(AT).append(stackTrace[i].toString()).append(LINE_FEED);
-        }
-        return sb.toString();
+        return TranceFormat.getStackInfo(prefix);
     }
 
     public static String getStackInfo(Throwable tr) {

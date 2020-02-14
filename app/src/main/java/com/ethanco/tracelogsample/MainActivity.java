@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         binding.btnLTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LTest.test();
+                LTest.test(MainActivity.this);
                 //LTest.test2Hierarchy();
             }
         });
