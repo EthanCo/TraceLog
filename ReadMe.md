@@ -59,6 +59,14 @@ Add it in your root build.gradle at the end of repositories:
 	traceLog.i(map)
 	traceLog.i(object)
 
+### 日志保存至本地 : 自定义日志文件名
+
+```
+String dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+String logFileName = "TraceLog-" + dateFormat;
+traceLog.addTrace(new DiskLogTrace(this,"TraceLog", logFileName))
+```
+
 ### 使用L.java便捷打印
 要使用L.java全局便捷打印需要额外添加以下依赖  
 
