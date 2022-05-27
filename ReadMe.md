@@ -67,6 +67,8 @@ String logFileName = "TraceLog-" + dateFormat;
 traceLog.addTrace(new DiskLogTrace(this,"TraceLog", logFileName))
 ```
 
+> 此保存路径为 sdcard/Android/data/包名/TraceLog/TraceLog-yyyy-MM-dd hh:mm:ss.log
+
 ### 使用L.java便捷打印
 要使用L.java全局便捷打印需要额外添加以下依赖  
 
